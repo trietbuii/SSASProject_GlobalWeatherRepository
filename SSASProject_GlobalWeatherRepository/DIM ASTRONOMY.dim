@@ -1,0 +1,203 @@
+﻿<Dimension xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="e55adb2f-9bd4-48fb-a2bb-b6bea5acf71f" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>DIM ASTRONOMY</ID>
+  <Name>DIM ASTRONOMY</Name>
+  <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+  <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+  <Annotations>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramLayout</Name>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowRelationshipNames</Name>
+      <Value>false</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:UseDiagramDefaultLayout</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortLeft</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingLeft</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramZoom</Name>
+      <Value>100</Value>
+    </Annotation>
+  </Annotations>
+  <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
+  <State>Unprocessed</State>
+  <Source xsi:type="DataSourceViewBinding" dwd:design-time-name="afdb8c34-e796-4cbe-9e66-586f9c87fe60">
+    <DataSourceViewID>Data Warehouse Global Weather Repository</DataSourceViewID>
+  </Source>
+  <ErrorConfiguration dwd:design-time-name="4699f778-a723-4da9-9367-9fb6fed9c69b">
+    <KeyNotFound>ReportAndStop</KeyNotFound>
+    <KeyDuplicate>ReportAndStop</KeyDuplicate>
+    <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+  </ErrorConfiguration>
+  <CurrentStorageMode>Molap</CurrentStorageMode>
+  <Attributes>
+    <Attribute dwd:design-time-name="7866d806-fc12-45f5-9dc7-5107f60e5d0b">
+      <ID>Astronomy Id</ID>
+      <Name>Astronomy Id</Name>
+      <Usage>Key</Usage>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="e13dfe81-4458-47d2-ac25-46e619125504">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="db7b3026-f7b4-41a2-bbac-94634dbc3f65">
+            <TableID>dbo_DIM_ASTRONOMY</TableID>
+            <ColumnID>astronomy_id</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="463a5107-53d5-4f75-b4e8-172861df7a97">
+          <AttributeID>Sunrise</AttributeID>
+          <Name>Sunrise</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="1a1e3221-82f1-4069-bbb3-9c81f439e0e3">
+          <AttributeID>Sunset</AttributeID>
+          <Name>Sunset</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="f106ecce-a0ab-4004-b8b6-d341b45b0cc9">
+          <AttributeID>Moonrise</AttributeID>
+          <Name>Moonrise</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="56958bd4-1c30-42e4-872c-a47c98cf545e">
+          <AttributeID>Moonset</AttributeID>
+          <Name>Moonset</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="2b45d6a1-2b85-47f6-a3f3-c30af8016b91">
+          <AttributeID>Moon Phase Id</AttributeID>
+          <Name>Moon Phase Id</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="5f002b8d-9f46-46ed-b069-ec8ab17a3871">
+      <ID>Sunrise</ID>
+      <Name>Sunrise</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="87c4687b-e0d2-4888-a6d6-1b4b02d1c1c3">
+          <DataType>WChar</DataType>
+          <DataSize>20</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="567eb1fa-65af-49ec-b4d3-72937304d408">
+            <TableID>dbo_DIM_ASTRONOMY</TableID>
+            <ColumnID>sunrise</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="5d823fb6-3904-406c-afad-60ad07f53ea2">
+      <ID>Sunset</ID>
+      <Name>Sunset</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="7e646754-8bfa-45b8-8f06-040602744c2c">
+          <DataType>WChar</DataType>
+          <DataSize>20</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="ab416200-5050-4186-a8b6-ac704c3dc870">
+            <TableID>dbo_DIM_ASTRONOMY</TableID>
+            <ColumnID>sunset</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="3b856c6d-e1af-4daf-9c76-e18cec140c01">
+      <ID>Moonrise</ID>
+      <Name>Moonrise</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="4e400dd5-2a3a-459f-87a0-727f506996ae">
+          <DataType>WChar</DataType>
+          <DataSize>20</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="0532a92f-2cd1-4668-a31f-d4a45e633292">
+            <TableID>dbo_DIM_ASTRONOMY</TableID>
+            <ColumnID>moonrise</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="dc3fb908-f22f-4014-8dce-c69aa1239363">
+      <ID>Moonset</ID>
+      <Name>Moonset</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="774ae218-1c46-4b68-9589-57b738f0873c">
+          <DataType>WChar</DataType>
+          <DataSize>20</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="247a93ec-83c2-4cd8-8a64-341dc2799ccc">
+            <TableID>dbo_DIM_ASTRONOMY</TableID>
+            <ColumnID>moonset</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="aeb7a6ed-e134-4c8b-b9cd-5501dc8ed43e">
+      <ID>Moon Phase Id</ID>
+      <Name>Moon Phase Id</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="04fb4ce9-7e56-4734-9896-847f24fd87a5">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="6c46e554-cc37-4d14-bb40-64ab23a52564">
+            <TableID>dbo_DIM_MOON_PHASE</TableID>
+            <ColumnID>moon_phase_id</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="5f579cbe-aaa1-4e1d-be02-42d18732c27e">
+          <AttributeID>Moon Phase</AttributeID>
+          <Name>Moon Phase</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="ceaea495-3590-4fd8-998f-b9ff157e7f19">
+      <ID>Moon Phase</ID>
+      <Name>Moon Phase</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="62c5a44d-46f7-48c2-96e8-8ffa65a84189">
+          <DataType>WChar</DataType>
+          <DataSize>50</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="a33a38d7-98db-4f07-98c2-e2e6d562f4d9">
+            <TableID>dbo_DIM_MOON_PHASE</TableID>
+            <ColumnID>moon_phase</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+  </Attributes>
+  <ddl300:ProcessingState>Unprocessed</ddl300:ProcessingState>
+</Dimension>

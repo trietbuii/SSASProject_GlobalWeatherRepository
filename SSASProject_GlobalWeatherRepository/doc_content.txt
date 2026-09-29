@@ -1,0 +1,1598 @@
+super note
+drop table
+DROP TABLE IF EXISTS dbo.FACT_WEATHER;
+DROP TABLE IF EXISTS dbo.DIM_ASTRONOMY;
+DROP TABLE IF EXISTS dbo.DIM_MOON_PHASE;
+DROP TABLE IF EXISTS dbo.DIM_WIND_DIRECTION;
+DROP TABLE IF EXISTS dbo.DIM_WEATHER_CONDITION;
+DROP TABLE IF EXISTS dbo.DIM_TIME;
+DROP TABLE IF EXISTS dbo.DIM_DATE;
+DROP TABLE IF EXISTS dbo.DIM_LOCATION;
+DROP TABLE IF EXISTS dbo.DIM_COUNTRY;
+create table
+-- DIM_COUNTRY
+CREATE TABLE dbo.DIM_COUNTRY
+(
+    country_id INT IDENTITY(1,1) NOT NULL,
+    country_name VARCHAR(100) NOT NULL,
+    CONSTRAINT PK_DIM_COUNTRY PRIMARY KEY (country_id)
+);
+-- DIM_DATE
+CREATE TABLE dbo.DIM_DATE
+(
+    date_id INT NOT NULL,
+    full_date DATE NOT NULL,
+    year INT NOT NULL,
+    quarter INT NOT NULL,
+    month INT NOT NULL,
+    week_of_year INT NOT NULL,
+    day INT NOT NULL,
+    CONSTRAINT PK_DIM_DATE PRIMARY KEY (date_id)
+);
+-- DIM_TIME
+CREATE TABLE dbo.DIM_TIME
+(
+    time_id INT NOT NULL,
+    hour INT NOT NULL,
+    minute INT NOT NULL,
+    CONSTRAINT PK_DIM_TIME PRIMARY KEY (time_id)
+);
+-- DIM_WEATHER_CONDITION
+CREATE TABLE dbo.DIM_WEATHER_CONDITION
+(
+    condition_id INT IDENTITY(1,1) NOT NULL,
+    condition_text VARCHAR(100) NOT NULL,
+    CONSTRAINT PK_DIM_WEATHER_CONDITION PRIMARY KEY (condition_id)
+);
+-- DIM_WIND_DIRECTION
+CREATE TABLE dbo.DIM_WIND_DIRECTION
+(
+    wind_direction_id INT IDENTITY(1,1) NOT NULL,
+    wind_direction VARCHAR(50) NOT NULL,
+    CONSTRAINT PK_DIM_WIND_DIRECTION PRIMARY KEY (wind_direction_id)
+);
+-- DIM_MOON_PHASE
+CREATE TABLE dbo.DIM_MOON_PHASE
+(
+    moon_phase_id INT IDENTITY(1,1) NOT NULL,
+    moon_phase VARCHAR(50) NOT NULL,
+    CONSTRAINT PK_DIM_MOON_PHASE PRIMARY KEY (moon_phase_id)
+);
+-- DIM_LOCATION
+CREATE TABLE dbo.DIM_LOCATION
+(
+    location_id INT IDENTITY(1,1) NOT NULL,
+    location_name VARCHAR(150) NOT NULL,
+    latitude FLOAT NULL,
+    longitude FLOAT NULL,
+    timezone VARCHAR(100) NULL,
+    country_id INT NOT NULL,
+    CONSTRAINT PK_DIM_LOCATION PRIMARY KEY (location_id),
+    CONSTRAINT FK_DIM_LOCATION_COUNTRY
+        FOREIGN KEY (country_id)
+        REFERENCES dbo.DIM_COUNTRY(country_id)
+);
+-- DIM_ASTRONOMY
+CREATE TABLE dbo.DIM_ASTRONOMY
+(
+    astronomy_id INT IDENTITY(1,1) NOT NULL,
+    sunrise VARCHAR(20) NULL,
+    sunset VARCHAR(20) NULL,
+    moonrise VARCHAR(20) NULL,
+    moonset VARCHAR(20) NULL,
+    moon_phase_id INT NOT NULL,
+    CONSTRAINT PK_DIM_ASTRONOMY PRIMARY KEY (astronomy_id),
+    CONSTRAINT FK_DIM_ASTRONOMY_MOON_PHASE
+        FOREIGN KEY (moon_phase_id)
+        REFERENCES dbo.DIM_MOON_PHASE(moon_phase_id)
+);
+-- FACT_WEATHER
+CREATE TABLE dbo.FACT_WEATHER
+(
+    weather_id BIGINT IDENTITY(1,1) NOT NULL,
+    date_id INT NOT NULL,
+    time_id INT NOT NULL,
+    location_id INT NOT NULL,
+    condition_id INT NOT NULL,
+    wind_direction_id INT NOT NULL,
+    astronomy_id INT NOT NULL,
+    temperature_celsius FLOAT NULL,
+    wind_kph FLOAT NULL,
+    wind_degree INT NULL,
+    pressure_mb FLOAT NULL,
+    precip_mm FLOAT NULL,
+    humidity INT NULL,
+    cloud INT NULL,
+    feels_like_celsius FLOAT NULL,
+    visibility_km FLOAT NULL,
+    uv_index FLOAT NULL,
+    gust_kph FLOAT NULL,
+    air_quality_ozone FLOAT NULL,
+    air_quality_pm25 FLOAT NULL,
+    air_quality_pm10 FLOAT NULL,
+    moon_illumination INT NULL,
+    CONSTRAINT PK_FACT_WEATHER PRIMARY KEY (weather_id),
+    CONSTRAINT FK_FACT_WEATHER_DATE
+        FOREIGN KEY (date_id)
+        REFERENCES dbo.DIM_DATE(date_id),
+    CONSTRAINT FK_FACT_WEATHER_TIME
+        FOREIGN KEY (time_id)
+        REFERENCES dbo.DIM_TIME(time_id),
+    CONSTRAINT FK_FACT_WEATHER_LOCATION
+        FOREIGN KEY (location_id)
+        REFERENCES dbo.DIM_LOCATION(location_id),
+    CONSTRAINT FK_FACT_WEATHER_CONDITION
+        FOREIGN KEY (condition_id)
+        REFERENCES dbo.DIM_WEATHER_CONDITION(condition_id),
+    CONSTRAINT FK_FACT_WEATHER_WIND_DIRECTION
+        FOREIGN KEY (wind_direction_id)
+        REFERENCES dbo.DIM_WIND_DIRECTION(wind_direction_id),
+    CONSTRAINT FK_FACT_WEATHER_ASTRONOMY
+        FOREIGN KEY (astronomy_id)
+        REFERENCES dbo.DIM_ASTRONOMY(astronomy_id)
+);
+tạo bạng dim date
+Để điền chính xác vào cửa sổ 
+Derived Column Transformation Editor
+ như trong hình của bạn, bạn hãy nhìn xuống bảng lưới ở nửa dưới cửa sổ và điền lần lượt từng dòng như sau nhé (bạn có thể copy cột Expression dán thẳng vào phần mềm):
+Dòng 1:
+ (Tạo cột ngày tháng chuẩn)
+Derived Column Name:
+ Gõ chữ 
+full_date
+Derived Column:
+ Chọn 
+<add as new column>
+Expression:
+ Copy và dán công thức sau: 
+(DT_DBDATE)last_updated
+Dòng 2:
+ (Tách năm)
+Derived Column Name:
+ Gõ chữ 
+year
+Derived Column:
+ Chọn 
+<add as new column>
+Expression:
+ 
+YEAR((DT_DBTIMESTAMP)last_updated)
+Dòng 3:
+ (Tách quý)
+Derived Column Name:
+ Gõ chữ 
+quarter
+Derived Column:
+ Chọn 
+<add as new column>
+Expression:
+ 
+DATEPART("qq",(DT_DBTIMESTAMP)last_updated)
+Dòng 4:
+ (Tách tháng)
+Derived Column Name:
+ Gõ chữ 
+month
+Derived Column:
+ Chọn 
+<add as new column>
+Expression:
+ 
+MONTH((DT_DBTIMESTAMP)last_updated)
+Dòng 5:
+ (Tách tuần)
+Derived Column Name:
+ Gõ chữ 
+week_of_year
+Derived Column:
+ Chọn 
+<add as new column>
+Expression:
+ 
+DATEPART("ww",(DT_DBTIMESTAMP)last_updated)
+Dòng 6:
+ (Tách ngày)
+Derived Column Name:
+ Gõ chữ 
+day
+Derived Column:
+ Chọn 
+<add as new column>
+Expression:
+ 
+DAY((DT_DBTIMESTAMP)last_updated)
+Dòng 7:
+ (Tạo mã date_id dạng YYYYMMDD - Ví dụ: 20240516)
+Derived Column Name:
+ Gõ chữ 
+date_id
+Derived Column:
+ Chọn 
+<add as new column>
+Expression:
+ 
+(DT_I4)(YEAR((DT_DBTIMESTAMP)last_updated) * 10000 + MONTH((DT_DBTIMESTAMP)last_updated) * 100 + DAY((DT_DBTIMESTAMP)last_updated))
+BỎ nháp
+CHƯƠNG 1. TỔNG QUAN ĐỀ TÀI
+1.1 Lý do chọn đề tài
+1.1 Lý do chọn đề tài
+Trong bối cảnh biến đổi khí hậu diễn ra ngày càng phức tạp trên quy mô toàn cầu, các hiện tượng thời tiết cực đoan như bão lũ, hạn hán hay sự biến động nhiệt độ bất thường đang tác động trực tiếp và sâu sắc đến nhiều lĩnh vực trọng yếu như nông nghiệp, logistics, hàng không, năng lượng tái tạo và đời sống xã hội. Việc thu thập, lưu trữ và khai thác hiệu quả nguồn dữ liệu khí tượng không chỉ dừng lại ở bài toán dự báo ngắn hạn, mà còn đóng vai trò then chốt trong việc nhận diện xu hướng dài hạn, đánh giá chất lượng môi trường sống và cung cấp cơ sở dữ liệu tin cậy hỗ trợ các nhà hoạch định chiến lược đưa ra quyết định kịp thời.
+Xuất phát từ nhu cầu trên, nhóm chúng em quyết định chọn đề tài “Xây dựng hệ thống kho dữ liệu và OLAP phân tích dữ liệu thời tiết toàn cầu”. Mục tiêu của đề tài là nhằm tổ chức dữ liệu theo hướng thuận tiện cho việc tổng hợp và phân tích các góc nhìn đa chiều về thời gian, khu vực và các yếu tố thời tiết, từ đó hỗ trợ nhận diện xu hướng, so sánh và đánh giá các đặc điểm của dữ liệu.
+Thông qua việc triển khai hệ thống OLAP, nhóm mong muốn áp dụng kiến thức đã học để xây dựng mô hình kho dữ liệu chuẩn hóa, phục vụ cho việc tổng hợp, so sánh và phân tích dữ liệu. Hệ thống được xây dựng hướng đến khả năng khai thác dữ liệu theo nhiều cấp độ và chiều phân tích khác nhau, giúp người dùng dễ dàng quan sát sự thay đổi của các yếu tố thời tiết giữa các khu vực và trong từng khoảng thời gian. Qua đó, các thông tin được tổ chức từ dữ liệu ban đầu có thể được chuyển đổi thành những kết quả phân tích trực quan, hỗ trợ quá trình đánh giá và đưa ra nhận định dựa trên dữ liệu. 
+1.2 Giớ thiệu dataset
+1.2.1 Tổng quan dataset
+1.2.1 Tổng quan dataset
+Tên bộ dữ liệu: Global Weather Repository.
+Kho dữ liệu “Global Weather Repository” tập trung vào lĩnh vực thời tiết và khi tượng, cung cấp thông tin về điều kiện thời tiết tại nhiều khu vực trên thế giới.
+Kho dữ liệu cung cấp các thông tin chi tiết về thời tiết như: nhiệt độ, độ ẩm, tốc độ và hướng gió, áp suất khí quyển, lượng mưa, tầm nhìn, chỉ số UV, chất lượng không khí và các thông tin thiên văn như thời gian mặt trời mọc, mặt trời lặn, mặt trăng mọc, mặt trăng lặn và pha của mặt trăng.
+Dữ liệu được tổ chức theo thời gian và địa điểm, cho phép thực hiện các phân tích đa chiều giữa các khu vực và các khoảng thời gian khác nhau. Bên cạnh đó, số lượng lớn các thuộc tính đo lường giúp hệ thống có thể thực hiện các phép tổng hợp, so sánh và đánh giá sự thay đổi của các yếu tố thời tiết.
+Kho dữ liệu được xây dựng với hướng chủ đề phân tích dữ liệu thời tiết toàn cầu, phục vụ cho việc xây dựng kho dữ liệu và hệ thống OLAP nhằm khai thác các xu hướng và đặc điểm thời tiết theo nhiều góc nhìn khác nhau.
+1.2.2 Mô tả thông số dataset
+1.2.2 Mô tả thông số dataset
+Bộ dữ liệu gốc gồm 164.694 dòng và 41 cột, có dung lượng khoảng 43,6 MB.
+Bộ dữ liệu sau khi làm sạch gồm 164,104 dòng  và 29 cột, có du lượng 32.70 MB.
+Dữ liệu được ghi nhận trong khoảng thời gian từ 16/05/2024 đến 11/09/2026.
+Bộ dữ liệu bao gồm thông tin thời tiết tại 211 quốc gia và 268 khu vực/địa điểm khác nhau.
+Dữ liệu không có giá trị thiếu và không có dòng bị trùng lặp hoàn toàn.
+Các thuộc tính trong dataset bao gồm thông tin về thời gian, địa điểm, nhiệt độ, gió, áp suất, lượng mưa, độ ẩm, mây, tầm nhìn, chỉ số UV, chất lượng không khí và thông tin thiên văn.
+Các thuộc tính đo lường như nhiệt độ, tốc độ gió, áp suất, lượng mưa, độ ẩm, tầm nhìn và các chỉ số chất lượng không khí cung cấp nhiều giá trị có thể sử dụng cho việc tổng hợp, tính trung bình, so sánh và phân tích trong hệ thống OLAP.
+Nguồn tải dataset: 
+https://www.kaggle.com/datasets/nelgiriyewithana/global-weather-repository
+1.2.3 Làm sạch Dataset
+1.1.3 Làm sạch Dataset
+Bước 1: Sử dụng thư viện Pandas để xử lý dữ liệu dạng bảng và Path để quản lý đường dẫn tệp. Đồng thời xác định tệp dữ liệu đầu vào và tệp kết quả sau khi làm sạch.
+Hình 1.1.3.1: Khai báo thư viện và đường dẫn tệp dữ liệu
+Bước 2: Thiết lập các ngưỡng được sử dụng để phát hiện dữ liệu bất thường hoặc nghi ngờ.
+Hình 1.1.3.2: Thiết lập các hằng số ngưỡng lọc dữ liệu
+Bước 3: Xây dựng danh sách quốc gia hợp lệ để lọc bỏ các bản ghi có tên quốc gia không tồn tại hoặc bị ghi sai.
+Hình 1.1.3.3: Danh sách các quốc gia hợp lệ 
+Bước 4: Xây dựng miền giá trị hợp lệ cho các thuộc tính định lượng của dữ liệu thời tiết, dựa trên giới hạn vật lý thực tế.
+Hình 1.1.3.4: Miền giá trị hợp lệ cho các thuộc tính thời tiết
+Bước 5: Xác định các thuộc tính mà giá trị âm là không hợp lý về mặt vật lý như độ ẩm, lượng mưa, tốc độ gió và các chỉ số chất lượng không khí.
+Hình 1.1.3.5: Danh sách thuộc tính chỉ nhận giá trị không âm
+Bước 6: Xác định thêm các cột có kiểu dữ liệu số để phục vụ kiểm tra và chuyển đổi kiểu dữ liệu.
+Hình 1.1.3.6: Các cột số bổ sung cần xử lý kiểu dữ liệu
+Bước 7: Chỉ giữ lại các thuộc tính cần thiết cho quá trình phân tích, bao gồm các cột phục vụ cho các bảng dimension và fact trong mô hình bông tuyết.
+Hình 1.1.3.7: Danh sách các thuộc tính mục tiêu cho mô hình bông tuyết
+Bước 8: Xây dựng hàm ghi nhận số lượng dữ liệu trước và sau mỗi bước làm sạch để biết có bao nhiêu dòng bị loại bỏ.
+Hình 1.1.3.8: Hàm ghi log theo dõi số lượng bản ghi sau mỗi bước
+Bước 9: Xây dựng hàm loại bỏ các giá trị xuất hiện với tỷ lệ quá thấp trong một nhóm. 
+Hình 1.1.3.9: Hàm loại bỏ nhóm thiểu số trong dữ liệu
+Bước 10: Xây dựng hàm chuyển các chuỗi giờ dạng "06:30 AM" ở các cột sunrise, sunset, moonrise, moonset thành đối tượng time. Trả về None nếu chuỗi rỗng hoặc không hợp lệ.
+Hình 1.1.3.10: Hàm chuẩn hóa chuỗi thời gian sang kiểu time
+Bước 11: Đọc dữ liệu gốc từ file CSV vào DataFrame. Chuẩn hóa tên cột về chữ thường, thay khoảng trắng, dấu chấm và dấu gạch ngang bằng _. Loại bỏ khoảng trắng thừa ở các trường văn bản. Kiểm tra đủ cột bắt buộc, báo lỗi nếu thiếu.
+Hình 1.1.3.11: Đọc dữ liệu gốc, chuẩn hóa tên cột và kiểm tra cột bắt buộc
+Bước 12: Loại bỏ các dòng có quốc gia bị thiếu hoặc không thuộc danh sách quốc gia hợp lệ. Đồng thời loại bỏ các dòng có location_name rỗng, null hoặc chứa chuỗi vô nghĩa.
+Hình 1.1.3.12: Lọc bỏ quốc gia không thuộc whitelist hoặc bị thiếu
+Bước 13: Đảm bảo các thuộc tính định lượng có kiểu dữ liệu số để thực hiện các phép kiểm tra tiếp theo. Các giá trị không thể chuyển đổi sẽ thành NaN.
+Hình 1.1.3.13: Ép kiểu dữ liệu số cho các thuộc tính định lượng
+Bước 14: Loại bỏ các dòng chứa giá trị -9999 
+Hình 1.1.3.14: Loại bỏ các dòng chứa giá trị lỗi -9999
+Bước 15: Loại bỏ các giá trị âm không hợp lý về mặt vật lý ở các cột đã xác định trong NON_NEG.
+Hình 1.1.3.15: Loại bỏ giá trị âm không hợp lệ
+Bước 16: Loại bỏ các giá trị nằm ngoài khoảng hợp lý đã xác định trong RANGES. In ra số lượng bản ghi vi phạm cho từng cột.
+Hình 1.1.3.16: Lọc giá trị nằm ngoài miền vật lý quy định
+Bước 17: Kiểm tra mối quan hệ giữa PM2.5 và PM10. Vì PM2.5 là hạt nhỏ hơn nằm trong PM10, nếu PM2.5 > PM10 thì bản ghi được xem là không hợp lý và bị loại bỏ.
+Hình 1.1.3.17: Kiểm tra và loại bỏ bản ghi vi phạm quan hệ PM2.5 và PM10
+Bước 18: Kiểm tra những bản ghi có nhiệt độ cảm nhận chênh lệch quá lớn (> 25°C) so với nhiệt độ thực tế.
+Hình 1.1.3.18: Lọc bỏ bản ghi chênh lệch nhiệt độ cảm nhận bất thường
+Bước 19: Kiểm tra last_updated_epoch và chuyển đổi sang thời gian UTC chuẩn. Loại bỏ bản ghi thiếu last_updated_epoch, datetime không hợp lệ, nằm ngoài khoảng từ 2024-01-01 đến hiện tại, hoặc thiếu nhiệt độ.
+Hình 1.1.3.19: Chuẩn hóa thời gian sang UTC và lọc dữ liệu mốc thời gian/nhiệt độ
+Bước 20: Kiểm tra trường hợp cùng một location_name xuất hiện với nhiều country khác nhau. Xác định quốc gia chiếm đa số cho mỗi địa điểm và loại bỏ các bản ghi bị gán nhầm quốc gia.
+Hình 1.1.3.20: Sửa lỗi gán nhầm quốc gia cho địa điểm
+Bước 21: Phát hiện và loại bỏ những cặp Country & Location có số lượng bản ghi quá thấp (< 10% trung vị) so với mức thông thường của các location khác trong cùng quốc gia.
+Hình 1.1.3.21: Loại bỏ trạm thời tiết có số lượng bản ghi quá thấp
+Bước 22: Loại bỏ các Location có tọa độ bất thường tức là cùng một địa điểm mà tọa độ latitude hoặc longitude dao động quá 1.5° giữa các bản ghi.
+Hình 1.1.3.22: Lọc dữ liệu địa điểm có tọa độ phân tán bất thường
+Bước 23: Các bản ghi thuộc timezone thiểu số (< 10% trong cùng một địa điểm) sẽ bị loại bỏ vì đây là dấu hiệu gán nhầm múi giờ.
+Hình 1.1.3.23: Loại bỏ bản ghi thuộc timezone thiểu số
+Bước 24: Chuyển đổi các giá trị sunrise, sunset, moonrise, moonset từ chuỗi dạng "06:30 AM" về đối tượng time có thể xử lý được.
+Hình 1.1.3.24: Chuyển đổi các cột thời gian mọc/lặn
+Bước 25: Xác định và loại bỏ những bản ghi trùng nhau dựa trên khóa logic country + location_name + last_updated_epoch. Khi trùng, ưu tiên giữ dòng có ít giá trị null nhất.
+Hình 1.1.3.25: Xóa trùng lặp theo khóa logic và ưu tiên giữ dòng ít rỗng nhất
+Bước 26: Sau khi hoàn thành làm sạch, sắp xếp dữ liệu theo quốc gia → địa điểm → thời gian, chỉ giữ lại các cột trong TARGET_COLS.
+Hình 1.1.3.26: Lựa chọn cột mục tiêu, sắp xếp và đổi tên cột theo schema
+Bước 27: Báo cáo kết quả sau làm sạch: số dòng, số cột, số quốc gia, số địa điểm, số cặp quốc gia và địa điểm, số bản ghi trùng lặp còn sót lại. Sau đó xuất dữ liệu ra file CSV.
+Hình 1.1.3.27: Báo cáo chất lượng dữ liệu cuối cùng và xuất file CSV
+1.2.4 Mô tả các thuộc tính sử dụng
+1.2.4 Mô tả các thuộc tính sử dụng
+Bảng mô tả chi tiết các thuộc tính sử dụng
+STT
+Tên thuộc tính
+Kiểu dữ liệu ban đầu
+Ý nghĩa của thuộc tính
+1
+country
+String
+Tên quốc gia của địa điểm đo lường
+2
+location_name
+String
+Tên thủ đô hoặc thành phố
+3
+latitude
+Float
+Vĩ độ của địa điểm
+4
+longitude
+Float
+Kinh độ của địa điểm
+5
+timezone
+String
+Múi giờ của địa điểm
+6
+last_updated_epoch
+Integer
+Thời gian cập nhật dữ liệu dưới định dạng Unix timestamp
+7
+last_updated
+String/Datetime
+Thời gian cập nhật dữ liệu (theo giờ địa phương)
+8
+temperature_celsius
+Float
+Nhiệt độ hiện tại (tính bằng độ C)
+9
+feels_like_celsius
+Float
+Nhiệt độ cảm nhận thực tế của cơ thể (độ C)
+10
+humidity
+Integer
+Độ ẩm không khí (tính theo %)
+11
+pressure_mb
+Float
+Áp suất khí quyển (tính bằng millibar)
+12
+precip_mm
+Float
+Lượng mưa đo được (tính bằng millimet)
+13
+wind_kph
+Float
+Tốc độ gió (tính bằng km/giờ)
+14
+wind_degree
+Integer
+Góc thổi của hướng gió (tính bằng độ)
+15
+wind_direction
+String
+Hướng gió
+16
+cloud
+Integer
+Tỷ lệ mây che phủ (tính theo %)
+17
+visibility_km
+Float
+Tầm nhìn xa (tính bằng km)
+18
+uv_index
+Float
+Chỉ số tia cực tím (UV Index)
+19
+condition_text
+String
+Mô tả tình trạng thời tiết hiện tại
+20
+air_quality_pm2_5
+Float
+Nồng độ bụi mịn PM2.5
+21
+air_quality_pm10
+Float
+Nồng độ bụi mịn PM10
+22
+air_quality_us_epa_index
+Integer
+Chỉ số chất lượng không khí theo tiêu chuẩn US EPA
+23
+air_quality_gb_defra_index
+Integer
+Chỉ số chất lượng không khí theo tiêu chuẩn GB DEFRA
+24
+sunrise
+String
+Thời gian mặt trời mọc trong ngày
+25
+sunset
+String
+Thời gian mặt trời lặn trong ngày
+26
+moon_phase
+String
+Chu kỳ/pha của mặt trăng
+27
+moon_illumination
+Integer
+Độ chiếu sáng của mặt trăng
+1.3 Thiết kế kho dữ liệu
+1.3.1 Sơ đồ bông tuyết minh họa
+1.3.1 Sơ đồ bông tuyết minh họa
+Hình 1.3.1.1. Sơ đồ bông tuyết minh họa
+1.3.2 Mô tả chi tiết các bảng
+1.3.2 Mô tả chi tiết các bảng
+1.3.2.1 Bảng DIM_COUNTRY
+Bảng 1.3.1. Bảng DIM_COUNTRY
+STT
+Loại
+Tên thuộc tính
+Kiểu dữ liệu
+Miền giá trị
+Mô tả
+1
+Khóa chính
+country_id
+Int
+null
+Mã định danh quốc gia
+2
+country_name
+Varchar
+null
+Tên quốc gia
+1.3.2.2 Bảng DIM_LOCATION
+Bảng 1.3.2. Bảng DIM_LOCATION
+STT
+Loại
+Tên thuộc tính
+Kiểu dữ liệu
+Miền giá trị
+Mô tả
+1
+Khóa chính
+location_id
+Int
+null
+Mã định danh địa điểm đo lường
+2
+Khóa ngoại
+country_id
+Int
+null
+Tham chiếu đến DIM_COUNTRY
+3
+location_name
+Varchar
+null
+Tên thành phố hoặc địa điểm
+4
+latitude
+Float
+[-90, 90]
+Vĩ độ địa lý của địa điểm
+5
+longitude
+Float
+[-180, 180]
+Kinh độ địa lý của địa điểm
+6
+timezone
+Varchar
+null
+Múi giờ của địa điểm
+1.3.2.3 Bảng DIM_DATE
+Bảng 1.3.3. Bảng DIM_DATE
+STT
+Loại
+Tên thuộc tính
+Kiểu dữ liệu
+Miền giá trị
+Mô tả
+1
+Khóa chính
+date_id
+Int
+null
+Mã định danh ngày
+2
+full_date
+Date
+null
+Ngày đầy đủ (yyyy-mm-dd)
+3
+year
+Int
+≥ 2024
+Năm
+4
+quarter
+Int
+[1, 4]
+Quý trong năm
+5
+month
+Int
+[1, 12]
+Tháng trong năm
+6
+week_of_year
+Int
+[1, 53]
+Tuần trong năm
+7
+day
+Int
+[1, 31]
+Ngày trong tháng
+1.3.2.4 Bảng DIM_TIME
+Bảng 1.3.4. Bảng DIM_TIME
+STT
+Loại
+Tên thuộc tính
+Kiểu dữ liệu
+Miền giá trị
+Mô tả
+1
+Khóa chính
+time_id
+Int
+null
+Mã định danh thời điểm trong ngày
+2
+hour
+Int
+[0, 23]
+Giờ trong ngày
+3
+minute
+Int
+[0, 59]
+Phút trong giờ
+1.3.2.5 Bảng DIM_WEATHER_CONDITION
+Bảng 1.3.5. Bảng DIM_WEATHER_CONDITION
+STT
+Loại
+Tên thuộc tính
+Kiểu dữ liệu
+Miền giá trị
+Mô tả
+1
+Khóa chính
+condition_id
+Int
+null
+Mã định danh tình trạng thời tiết
+2
+condition_text
+Varchar
+null
+Mô tả tình trạng thời tiết
+1.3.2.6 Bảng DIM_WIND_DIRECTION
+Bảng 1.3.6. Bảng DIM_WIND_DIRECTION
+STT
+Loại
+Tên thuộc tính
+Kiểu dữ liệu
+Miền giá trị
+Mô tả
+1
+Khóa chính
+wind_direction_id
+Int
+null
+Mã định danh hướng gió
+2
+wind_direction
+Varchar
+null
+Ký hiệu hướng gió (vd: N, NW, SE)
+1.3.2.7 Bảng DIM_MOON_PHASE
+Bảng 1.3.7. Bảng DIM_MOON_PHASE
+STT
+Loại
+Tên thuộc tính
+Kiểu dữ liệu
+Miền giá trị
+Mô tả
+1
+Khóa chính
+moon_phase_id
+Int
+null
+Mã định danh pha mặt trăng
+2
+moon_phase
+Varchar
+null
+Tên pha mặt trăng
+1.3.2.8 Bảng DIM_ASTRONOMY
+Bảng 1.3.8. Bảng DIM_ASTRONOMY
+STT
+Loại
+Tên thuộc tính
+Kiểu dữ liệu
+Miền giá trị
+Mô tả
+1
+Khóa chính
+astronomy_id
+Int
+null
+Mã định danh bản ghi thiên văn
+2
+Khóa ngoại
+moon_phase_id
+Int
+null
+Tham chiếu đến DIM_MOON_PHASE
+3
+sunrise
+Varchar
+null
+Giờ mặt trời mọc tại địa điểm
+4
+sunset
+Varchar
+null
+Giờ mặt trời lặn tại địa điểm
+5
+moonrise
+Varchar
+null
+Giờ mặt trăng mọc tại địa điểm
+6
+moonset
+Varchar
+null
+Giờ mặt trăng lặn tại địa điểm
+1.3.2.9 Bảng FACT_WEATHER
+Bảng 1.3.9. Bảng FACT_WEATHER
+STT
+Loại
+Tên thuộc tính
+Kiểu dữ liệu
+Miền giá trị
+Mô tả
+1
+Khóa chính
+weather_id
+Bigint
+null
+Mã định danh bản ghi thời tiết
+2
+Khóa ngoại
+date_id
+Int
+null
+Tham chiếu đến DIM_DATE
+3
+Khóa ngoại
+time_id
+Int
+null
+Tham chiếu đến DIM_TIME
+4
+Khóa ngoại
+location_id
+Int
+null
+Tham chiếu đến DIM_LOCATION
+5
+Khóa ngoại
+condition_id
+Int
+null
+Tham chiếu đến DIM_WEATHER_CONDITION
+6
+Khóa ngoại
+wind_direction_id
+Int
+null
+Tham chiếu đến DIM_WIND_DIRECTION
+7
+Khóa ngoại
+astronomy_id
+Int
+null
+Tham chiếu đến DIM_ASTRONOMY
+8
+temperature_celsius
+Float
+[-90, 60]
+Nhiệt độ thực tế tại thời điểm đo (°C)
+9
+wind_kph
+Float
+[0, 500]
+Tốc độ gió (km/giờ)
+10
+wind_degree
+Int
+[0, 360]
+Hướng gió tính theo độ
+11
+pressure_mb
+Float
+[870, 1085]
+Áp suất khí quyển (milibar)
+12
+precip_mm
+Float
+[0, 2000]
+Lượng mưa (mm)
+13
+humidity
+Int
+[0, 100]
+Độ ẩm tương đối (%)
+14
+cloud
+Int
+[0, 100]
+Độ che phủ của mây (%)
+15
+feels_like_celsius
+Float
+[-90, 60]
+Nhiệt độ cảm nhận thực tế (°C)
+16
+visibility_km
+Float
+[0, 100]
+Tầm nhìn xa (km)
+17
+uv_index
+Float
+[0, 20]
+Chỉ số bức xạ tia UV
+18
+gust_kph
+Float
+[0, 500]
+Tốc độ gió giật (km/giờ)
+19
+air_quality_ozone
+Float
+[0, 2000]
+Nồng độ ozone (O₃) trong không khí (μg/m³)
+20
+air_quality_pm25
+Float
+[0, 2000]
+Nồng độ bụi mịn PM2.5 (μg/m³)
+21
+air_quality_pm10
+Float
+[0, 3000]
+Nồng độ bụi PM10 (μg/m³)
+22
+moon_illumination
+Int
+[0, 100]
+Tỷ lệ bề mặt mặt trăng được chiếu sáng (%)
+1.4 Các câu truy vấn
+1.4 Các câu truy vấn
+Có bao nhiêu bản ghi thời tiết tại mỗi thành phố của từng quốc gia theo từng năm? 
+Nhiệt độ trung bình, thấp nhất và cao nhất của các thành phố thay đổi như thế nào theo từng quý?
+10 thành phố có nhiệt độ cảm nhận trung bình cao nhất trong năm 2025 là những thành phố nào và nhiệt độ cảm nhận cao hơn nhiệt độ thực tế bao nhiêu?
+Tổng lượng mưa và lượng mưa trung bình tại mỗi thành phố thay đổi như thế nào theo từng tuần và từng tháng?
+Độ ẩm và độ che phủ mây trung bình của từng loại thời tiết tại mỗi quốc gia là bao nhiêu?
+Tốc độ gió trung bình và tốc độ gió giật lớn nhất theo từng hướng gió tại mỗi thành phố là bao nhiêu?
+Góc gió trung bình của từng hướng gió thay đổi như thế nào theo từng giờ trong ngày?
+Áp suất khí quyển thấp nhất, cao nhất và trung bình tại các thành phố thuộc từng múi giờ thay đổi như thế nào theo từng tháng?
+10 thành phố có tầm nhìn trung bình thấp nhất trong những thời điểm có mưa là những thành phố nào?
+Chỉ số UV trung bình và cao nhất tại mỗi thành phố thay đổi như thế nào theo từng giờ trong ngày và từng tháng?
+Nồng độ Ozone, PM2.5 và PM10 trung bình tại từng quốc gia thay đổi như thế nào qua các tháng?
+Những thành phố nào có đồng thời nồng độ PM2.5 và PM10 cao, và trong những thời điểm đó thời tiết được ghi nhận là gì?
+Độ chiếu sáng trung bình của mặt trăng thay đổi như thế nào theo từng thành phố và từng thông tin thiên văn trong ngày?
+Thời gian mặt trời mọc, mặt trời lặn, mặt trăng mọc và mặt trăng lặn khác nhau như thế nào giữa các thành phố trong cùng một quốc gia?
+Tại mỗi quốc gia, loại thời tiết nào xuất hiện nhiều nhất trong từng giờ và có nhiệt độ, độ ẩm, lượng mưa và tốc độ gió trung bình như thế nào?
+CHƯƠNG 2. TÍCH HỢP DỮ LIỆU VÀ KHO (SSIS)
+2.1 Chuẩn bị Database
+2.1 Chuẩn bị Database
+Bước 1: 
+Mở phần mềm SQL Server Management Studio 22, kết nối đến server bằng
+Windows Authentication
+.
+Hình 2.1.1: Thiết lập kết nối với SQL Server
+Bước 2: 
+Để tạo cơ sở dữ liệu cấu hình cho Data Warehouse, hãy truy cập theo đường dẫn Management → Data Collection → Tasks → Configure Management Data Warehouse.
+ 
+Hình 2.1.2: Menu cấu hình Management Data Warehouse
+Bước 3: 
+Tại cửa sổ Welcome to the Configure Management Data Warehouse Wizard, nhấn chọn Next để tiếp tục.
+Hình 2.1.3: Giao diện chào mừng của Wizard
+Bước 4: 
+Nhấn vào nút New để thiết lập một cơ sở dữ liệu mới.
+Hình 2.1.4: Tuỳ chọn tạo mới Database
+Bước 5: 
+Điền tên cơ sở dữ liệu mới vào trường Database name rồi nhấn OK.
+Hình 2.1.5: Đặt tên cho cơ sở dữ liệu mới
+Bước 6: 
+Khi quay lại giao diện Configure Management Data Warehouse Storage, hãy chọn cơ sở dữ liệu vừa tạo tại mục Database name và nhấn Next.
+Hình 2.1.6: Chọn cơ sở dữ liệu vừa khởi tạo
+Bước 7: 
+Trong phần Map Logins and Users, thiết lập NT Service\MSSQLSERVER cho mục Users mapped to this login. Tại danh sách bên dưới, chọn toàn bộ các quyền cho Database rồi bấm Next.
+ 
+Hình 2.1.7: Thiết lập quyền cho Users
+Bước 8: 
+Kiểm tra lại toàn bộ thông tin cấu hình và nhấn Finish để thực thi.
+Hình 2.1.8: Xác nhận các thông tin cấu hình
+Bước 9: 
+Khi cửa sổ hiển thị trạng thái Success cho tất cả các tiến trình, nhấn Close để đóng.
+Hình 2.1.9: Trạng thái cấu hình thành công
+Bước 10: 
+Tiếp tục truy cập vào Management → Data Collection → Tasks → Configure Data Collection.
+Hình 2.1.10: Menu Configure Data Collection
+Bước 11: 
+Tại giao diện Welcome to the Configure Data Collection Wizard, nhấn chọn Next.
+Hình 2.1.11: Giao diện Wizard của Data Collection
+Bước 12: 
+Ở cửa sổ tiếp theo, tìm đến mục Select data collector sets you want to enable, đánh dấu chọn vào tuỳ chọn xuất hiện bên dưới rồi nhấn Next.
+ 
+Hình 2.1.12: Lựa chọn Data collector sets
+ 
+Bước 13: 
+Hoàn tất quá trình, cơ sở dữ liệu mới sẽ được hiển thị ngay trong mục Databases.
+Hình 2.1.13: Cơ sở dữ liệu mới xuất hiện trong hệ thống
+2.2 Tạo Project SSIS trong Visual Studio 2022
+2.32. Tạo mới Project SSIS
+Bước 1:
+ Mở Visual Studio 2026 lên và ấn Create a new project.
+Hình Màn hình Visual Studio 2026
+Bước 2:
+ Chọn Intergration Service Project và ấn Next.
+Hình Tạo project SSIS
+Bước 3: 
+Đặt tên cho project là SSISProject_GlobalWeatherRepository. Chọn nơi lưu trữ Project và ấn Create để tạo Project SSIS.
+Hình Cấu hình nơi lưu trữ project
+Bước 4:
+ Hoàn thành việc tạo SSIS Project và mở lên cửa sổ Control Flow.
+Hình Hoàn thành việc tạo SSIS Project
+2.3 Tao va xoa tat ca cac bang
+2.3.1 Drop All Tables
+2.3.1 Drop All Tables
+Bước 1: 
+Tại thẻ Control Flow, tiến hành kéo thả component Execute SQL Task vào vị trí đầu tiên của luồng xử lý, sau đó đổi tên component này thành Drop All Tables.
+Hình 2.3.1: Thêm component Drop All Tables vào luồng
+Bước 2: 
+Nhấn đúp chuột vào component vừa tạo để mở hộp thoại Editor. Tại thuộc tính Connection, hãy chọn tạo kết nối mới (New connection) trỏ tới Database.
+Hình 2.3.2: Mở hộp thoại Editor và chọn New Connection
+Bước 3: 
+Nhấn nút New để bắt đầu thiết lập một Connection mới liên kết với Data Warehouse.
+Hình 2.3.3: Khởi tạo kết nối mới đến Data Warehouse
+Bước 4: 
+Tại mục Provider, chọn Microsoft OLE DB Provider for SQL Server. Tiếp theo, điền Localhost vào trường tên máy chủ và chỉ định DataWarehouse_GlobalWeatherRepository làm cơ sở dữ liệu kết nối.
+Hình 2.3.4: Khai báo máy chủ và chọn Database
+Bước 5: 
+Nhấp vào Test Connection để kiểm tra. Khi nhận thông báo kết nối thành công, nhấn OK để hoàn tất việc tạo connection.
+Hình 2.3.5: Kiểm tra trạng thái Test Connection
+Bước 6: 
+Quay lại mục Connection, lựa chọn kết nối mà bạn vừa thiết lập thành công.
+Hình 2.3.6: Chọn connection vừa khởi tạo
+Bước 7: 
+Di chuyển đến thuộc tính SQL Statement và nhấp vào biểu tượng dấu ba chấm (...) nằm ở góc bên phải.
+Hình 2.3.7: Mở trình soạn thảo mã SQL Statement
+Bước 8: 
+Sao chép và dán toàn bộ đoạn mã SQL Script dùng để xóa bảng vào hộp thoại hiển thị, sau đó nhấn OK.
+Hình 2.3.8: Nhập mã Script xóa các bảng
+Bước 9: 
+Trở lại cửa sổ Editor chính, nhấn OK một lần nữa để lưu lại các thiết lập.
+Hình 2.3.9: Hoàn tất cấu hình Execute SQL Task
+2.3.2 Create All Tables
+2.3.2 Create All Tables
+Bước 1: 
+Tại thẻ Control Flow, tiến hành bổ sung component Execute SQL Task và đổi tên component này thành Create All Tables.
+Hình 2.3.2.1: Thêm component Create All Tables vào luồng
+Bước 2: 
+Nhấn đúp chuột vào component vừa tạo để mở hộp thoại Editor. Tại mục Connection, hãy lựa chọn kết nối đã thiết lập từ trước.
+Hình 2.3.2.2: Chọn kết nối đã khởi tạo tại mục Connection
+Bước 3: 
+Nhấp vào biểu tượng dấu ba chấm (...) tại thuộc tính SQL Statement để mở giao diện soạn thảo truy vấn.
+Hình 2.3.2.3: Mở trình soạn thảo mã truy vấn SQL
+Bước 4: 
+Tại cửa sổ soạn thảo, tiến hành nhập toàn bộ đoạn mã SQL Script dùng để tạo bảng dữ liệu, sau đó nhấn OK để xác nhận.
+Hình 2.3.2.4: Nhập đoạn mã Script để tạo các bảng
+ 
+-- DIM_COUNTRY
+CREATE TABLE dbo.DIM_COUNTRY
+(
+    country_id INT IDENTITY(1,1) NOT NULL,
+    country_name VARCHAR(100) NOT NULL,
+    CONSTRAINT PK_DIM_COUNTRY PRIMARY KEY (country_id)
+);
+-- DIM_DATE
+CREATE TABLE dbo.DIM_DATE
+(
+    date_id INT NOT NULL,
+    full_date DATE NOT NULL,
+    year INT NOT NULL,
+    quarter INT NOT NULL,
+    month INT NOT NULL,
+    week_of_year INT NOT NULL,
+    day INT NOT NULL,
+    CONSTRAINT PK_DIM_DATE PRIMARY KEY (date_id)
+);
+-- DIM_TIME
+CREATE TABLE dbo.DIM_TIME
+(
+    time_id INT NOT NULL,
+    hour INT NOT NULL,
+    minute INT NOT NULL,
+    CONSTRAINT PK_DIM_TIME PRIMARY KEY (time_id)
+);
+-- DIM_WEATHER_CONDITION
+CREATE TABLE dbo.DIM_WEATHER_CONDITION
+(
+    condition_id INT IDENTITY(1,1) NOT NULL,
+    condition_text VARCHAR(100) NOT NULL,
+    CONSTRAINT PK_DIM_WEATHER_CONDITION PRIMARY KEY (condition_id)
+);
+-- DIM_WIND_DIRECTION
+CREATE TABLE dbo.DIM_WIND_DIRECTION
+(
+    wind_direction_id INT IDENTITY(1,1) NOT NULL,
+    wind_direction VARCHAR(50) NOT NULL,
+    CONSTRAINT PK_DIM_WIND_DIRECTION PRIMARY KEY (wind_direction_id)
+);
+-- DIM_MOON_PHASE
+CREATE TABLE dbo.DIM_MOON_PHASE
+(
+    moon_phase_id INT IDENTITY(1,1) NOT NULL,
+    moon_phase VARCHAR(50) NOT NULL,
+    CONSTRAINT PK_DIM_MOON_PHASE PRIMARY KEY (moon_phase_id)
+);
+-- DIM_LOCATION
+CREATE TABLE dbo.DIM_LOCATION
+(
+    location_id INT IDENTITY(1,1) NOT NULL,
+    location_name VARCHAR(150) NOT NULL,
+    latitude FLOAT NULL,
+    longitude FLOAT NULL,
+    timezone VARCHAR(100) NULL,
+    country_id INT NOT NULL,
+    CONSTRAINT PK_DIM_LOCATION PRIMARY KEY (location_id),
+    CONSTRAINT FK_DIM_LOCATION_COUNTRY
+        FOREIGN KEY (country_id)
+        REFERENCES dbo.DIM_COUNTRY(country_id)
+);
+-- DIM_ASTRONOMY
+CREATE TABLE dbo.DIM_ASTRONOMY
+(
+    astronomy_id INT IDENTITY(1,1) NOT NULL,
+    sunrise VARCHAR(20) NULL,
+    sunset VARCHAR(20) NULL,
+    moonrise VARCHAR(20) NULL,
+    moonset VARCHAR(20) NULL,
+    moon_phase_id INT NOT NULL,
+    CONSTRAINT PK_DIM_ASTRONOMY PRIMARY KEY (astronomy_id),
+    CONSTRAINT FK_DIM_ASTRONOMY_MOON_PHASE
+        FOREIGN KEY (moon_phase_id)
+        REFERENCES dbo.DIM_MOON_PHASE(moon_phase_id)
+);
+-- FACT_WEATHER
+CREATE TABLE dbo.FACT_WEATHER
+(
+    weather_id BIGINT IDENTITY(1,1) NOT NULL,
+    date_id INT NOT NULL,
+    time_id INT NOT NULL,
+    location_id INT NOT NULL,
+    condition_id INT NOT NULL,
+    wind_direction_id INT NOT NULL,
+    astronomy_id INT NOT NULL,
+    temperature_celsius FLOAT NULL,
+    wind_kph FLOAT NULL,
+    wind_degree INT NULL,
+    pressure_mb FLOAT NULL,
+    precip_mm FLOAT NULL,
+    humidity INT NULL,
+    cloud INT NULL,
+    feels_like_celsius FLOAT NULL,
+    visibility_km FLOAT NULL,
+    uv_index FLOAT NULL,
+    gust_kph FLOAT NULL,
+    air_quality_ozone FLOAT NULL,
+    air_quality_pm25 FLOAT NULL,
+    air_quality_pm10 FLOAT NULL,
+    moon_illumination INT NULL,
+    CONSTRAINT PK_FACT_WEATHER PRIMARY KEY (weather_id),
+    CONSTRAINT FK_FACT_WEATHER_DATE
+        FOREIGN KEY (date_id)
+        REFERENCES dbo.DIM_DATE(date_id),
+    CONSTRAINT FK_FACT_WEATHER_TIME
+        FOREIGN KEY (time_id)
+        REFERENCES dbo.DIM_TIME(time_id),
+    CONSTRAINT FK_FACT_WEATHER_LOCATION
+        FOREIGN KEY (location_id)
+        REFERENCES dbo.DIM_LOCATION(location_id),
+    CONSTRAINT FK_FACT_WEATHER_CONDITION
+        FOREIGN KEY (condition_id)
+        REFERENCES dbo.DIM_WEATHER_CONDITION(condition_id),
+    CONSTRAINT FK_FACT_WEATHER_WIND_DIRECTION
+        FOREIGN KEY (wind_direction_id)
+        REFERENCES dbo.DIM_WIND_DIRECTION(wind_direction_id),
+    CONSTRAINT FK_FACT_WEATHER_ASTRONOMY
+        FOREIGN KEY (astronomy_id)
+        REFERENCES dbo.DIM_ASTRONOMY(astronomy_id)
+);
+Bước 5: 
+Quay lại hộp thoại Editor chính, nhấn OK một lần nữa để hoàn tất quá trình thiết lập.
+Hình 2.3.2.5: Hoàn tất cấu hình Execute SQL Task
+2.3.3 Execute tao tat ca cac bang.
+2.3.3 Thực thi tạo tất cả các bảng
+Bước 1: 
+Quay trở lại thẻ Control Flow, nhấp chuột phải vào component Create All Tables và chọn lệnh Execute để khởi chạy quá trình tạo bảng trên Database.
+Hình 2.3.3.1: Chạy lệnh Execute cho component Create All Tables
+Bước 2: 
+Khi quá trình thực thi kết thúc, một biểu tượng dấu tích xanh sẽ xuất hiện bên phải, xác nhận rằng việc tạo toàn bộ các bảng trong cơ sở dữ liệu đã thành công.
+Hình 2.3.3.2: Trạng thái tích xanh báo hiệu việc tạo bảng thành công
+2.4 Tạo bảng Dim và bảng Fact
+2.4.1 Bảng DIM_COUNTRY
+2.4.1 Bảng DIM_COUNTRY
+Bước 1: 
+Tại màn hình Control Flow, kéo thả component Data Flow Task vào luồng công việc, nhấp chuột phải vào component và chọn Rename.
+Hình 2.4.1.1: Đổi tên component Data Flow Task thành DIM_COUNTRY
+Bước 2: 
+Tiến hành đổi tên component thành DIM_COUNTRY, sau đó nhấp đúp chuột vào để mở màn hình thiết kế Data Flow.
+Hình 2.4.1.2: Giao diện Data Flow của DIM_COUNTRY
+Bước 3: 
+Tại giao diện Data Flow, thêm component Flat File Source từ Toolbox. Lúc này, component sẽ hiển thị biểu tượng lỗi màu đỏ do chưa được cấu hình tham số.
+Hình 2.4.1.3: Kéo thả Flat File Source vào luồng xử lý
+Bước 4: 
+Nhấp đúp chuột vào Flat File Source để mở hộp thoại Editor. Tại đây, chọn New... để khởi tạo một trình quản lý kết nối (connection manager) mới.
+Hình 2.4.1.4: Khởi tạo mới Flat File Connection Manager
+Bước 5: 
+Trong cửa sổ Flat File Connection Manager Editor, đặt tên cho kết nối là GLOBAL_WEATHER_SOURCE tại trường Connection manager name.
+Hình 2.4.1.5: Đặt tên cho Connection Manager
+Bước 6: 
+Nhấp vào nút Browse..., cửa sổ duyệt file sẽ hiện ra. Bạn điều hướng và chọn tệp dữ liệu nguồn có tên GlobalWeatherRepository_clean.
+Hình 2.4.1.6: Lựa chọn file dữ liệu nguồn
+Bước 7: 
+Đảm bảo mục Format được thiết lập là Delimited và đánh dấu chọn vào ô 'Column names in the first data row' để hệ thống nhận diện dòng đầu tiên là tên cột.
+Hình 2.4.1.7: Cấu hình các thông số định dạng cho Flat File
+Bước 8: 
+Chuyển sang thẻ Columns ở danh mục bên trái. Hệ thống sẽ hiển thị bảng dữ liệu mẫu giúp bạn kiểm tra xem các cột đã được phân tách chuẩn xác bằng dấu phẩy (Comma) hay chưa.
+Hình 2.4.1.8: Kiểm tra dữ liệu phân tách tại thẻ Columns
+Bước 9: 
+Tiếp tục chuyển sang thẻ Advanced. Nhấp chọn trường country_name, sau đó ở cột Properties bên phải, thiết lập thuộc tính DataType là string [DT_STR] và DataScale/Length là 100 để đồng bộ với định dạng cơ sở dữ liệu. Nhấn OK để xác nhận.
+Hình 2.4.1.9: Thiết lập kiểu dữ liệu cho cột country_name
+Bước 10: 
+Quay trở lại giao diện Flat File Source Editor, chọn thẻ Columns. Để tối ưu hóa quá trình xử lý, bỏ chọn tất cả các cột không cần thiết và chỉ giữ lại trường country_name. Nhấn OK để hoàn tất cấu hình nguồn.
+Hình 2.4.1.10: Loại bỏ các cột không cần thiết để tối ưu
+Bước 11: 
+Tiếp theo, kéo component Sort từ Toolbox vào màn hình Data Flow. Nối mũi tên luồng dữ liệu (màu xanh) từ Flat File Source sang component Sort.
+Hình 2.4.1.11: Nối luồng dữ liệu sang component Sort
+Bước 12: 
+Nháy đúp vào component Sort để cấu hình. Đánh dấu tích vào cột country_name trong danh sách. Đặc biệt chú ý, bạn phải đánh dấu chọn ô 'Remove rows with duplicate sort values' ở góc dưới bên trái để loại bỏ các bản ghi trùng lặp. Nhấn OK.
+Hình 2.4.1.12: Cấu hình loại bỏ dữ liệu trùng lặp trong Sort
+Bước 13: 
+Kéo thả đối tượng OLE DB Destination vào luồng công việc và nối mũi tên dữ liệu từ component Sort sang đối tượng này.
+Hình 2.4.1.13: Nối luồng dữ liệu sang OLE DB Destination
+Bước 14: 
+Mở cửa sổ OLE DB Destination Editor. Ở thẻ Connection Manager, chọn kết nối trỏ đến CSDL DataWarehouse_GlobalWeatherRepository. Tại Data access mode, chọn chế độ Table or view - fast load, rồi chỉ định bảng đích là [dbo].[DIM_COUNTRY].
+Hình 2.4.1.14: Cấu hình bảng đích DIM_COUNTRY
+Bước 15: 
+Chuyển sang thẻ Mappings, thực hiện ánh xạ đường nối từ cột country_name của dữ liệu đầu vào (Available Input) sang cột country_name của bảng đích (Available Destination). Cột country_id được để trống (<ignore>) do đây là khóa chính tự tăng (IDENTITY). Nhấn OK để lưu.
+Hình 2.4.1.15: Ánh xạ các trường dữ liệu tại thẻ Mappings
+Bước 16: 
+Trở lại màn hình Data Flow chính, nhấp chuột phải vào không gian trống và chọn Execute Task để chạy thử quá trình nạp dữ liệu cho bảng DIM_COUNTRY.
+Hình 2.4.1.16: Chạy thực thi Data Flow Task
+Bước 17: 
+Hoàn tất quá trình thực thi, hệ thống sẽ hiển thị dấu tích xanh cho toàn bộ các component, chứng tỏ việc nạp dữ liệu đã thành công.
+Hình 2.4.1.17: Quá trình nạp dữ liệu thành công
+ 
+ 
+2.4.2 Bảng DIM_DATE
+2.4.2 Bảng DIM_DATE
+Bước 1: 
+Kéo component Data Flow Task vào giao diện Control Flow, sau đó nhấp chuột phải và đổi tên component này.
+Hình 2.4.2.1: Kéo thả và đổi tên Data Flow Task
+Bước 2: 
+Tiến hành đổi tên component thành DIM_DATE, kế tiếp nháy đúp chuột để mở thiết kế Data Flow.
+Hình 2.4.2.2: Đổi tên thành DIM_DATE và mở Data Flow
+Bước 3: 
+Tại giao diện luồng dữ liệu, thêm component Flat File Source từ thanh công cụ. Ban đầu, component này sẽ báo lỗi (ký hiệu chữ X đỏ) do chưa được cấu hình.
+Hình 2.4.2.3: Thêm Flat File Source vào luồng
+Bước 4: 
+Mở hộp thoại thiết lập (Editor) bằng cách nhấp đúp vào Flat File Source. Trong mục Connection manager, chọn trình quản lý kết nối GLOBAL_WEATHER_SOURCE đã được khai báo trước đó.
+Hình 2.4.2.4: Chọn Connection manager đã có sẵn
+Bước 5: 
+Ở thẻ Columns, bỏ chọn tất cả các trường không liên quan, chỉ đánh dấu tích giữ lại duy nhất trường last_updated (trường ngày tháng) để tối ưu hiệu suất đọc, sau đó nhấn OK.
+Hình 2.4.2.5: Giữ lại cột last_updated tại thẻ Columns
+Bước 6: 
+Tiếp tục kéo component Derived Column từ Toolbox vào không gian làm việc. Nối mũi tên điều hướng luồng dữ liệu (màu xanh) từ Flat File Source sang Derived Column.
+Hình 2.4.2.6: Thêm component Derived Column và nối luồng
+Bước 7: 
+Mở giao diện cấu hình của Derived Column. Chọn <add as new column> và sử dụng các hàm xử lý thời gian của SSIS để phân tách các thành phần từ trường last_updated như sau:
+-
+        
+- full_date: (DT_DBDATE)last_updated
+-
+        
+- year: YEAR((DT_DBTIMESTAMP)last_updated)
+-
+        
+- quarter: DATEPART("qq",(DT_DBTIMESTAMP)last_updated)
+-
+        
+- month: MONTH((DT_DBTIMESTAMP)last_updated)
+-
+        
+- week_of_year: DATEPART("ww",(DT_DBTIMESTAMP)last_updated)
+-
+        
+- day: DAY((DT_DBTIMESTAMP)last_updated)
+-
+        
+- date_id: (DT_I4)(YEAR((DT_DBTIMESTAMP)last_updated) * 10000 + MONTH((DT_DBTIMESTAMP)last_updated) * 100 + DAY((DT_DBTIMESTAMP)last_updated))
+Hình 2.4.2.7: Cấu hình các biểu thức thời gian trong Derived Column
+Bước 8: 
+Sau khi cấu hình xong Derived Column, kéo thả component Sort vào luồng và nối dây dữ liệu từ Derived Column sang Sort.
+Hình 2.4.2.8: Thêm component Sort và nối luồng dữ liệu
+Bước 9: 
+Trong cấu hình của component Sort, đánh dấu tích vào cột date_id để sắp xếp. Chú ý đánh dấu vào tùy chọn 'Remove rows with duplicate sort values' nằm ở dưới cùng góc trái để lọc bỏ hoàn toàn các ngày trùng lặp, rồi bấm OK.
+Hình 2.4.2.9: Cấu hình loại bỏ bản ghi trùng lặp với date_id
+Bước 10: 
+Thêm OLE DB Destination vào luồng công việc. Nối mũi tên dữ liệu từ Sort sang component đích này.
+Hình 2.4.2.10: Kéo thả OLE DB Destination vào luồng
+Bước 11: 
+Nháy đúp vào OLE DB Destination. Tại thẻ Connection Manager, hãy chọn kết nối trực tiếp đến cơ sở dữ liệu DataWarehouse_GlobalWeatherRepository.
+Hình 2.4.2.11: Chỉ định kết nối tới Data Warehouse
+Bước 12: 
+Thiết lập thuộc tính Data access mode thành 'Table or view - fast load' để tăng tốc độ ghi, sau đó chọn đích đến là bảng [dbo].[DIM_DATE] trong danh sách thả xuống.
+Hình 2.4.2.12: Cấu hình bảng đích là DIM_DATE với chế độ fast load
+Bước 13: 
+Chuyển qua thẻ Mappings để liên kết dữ liệu. Đảm bảo toàn bộ các cột vừa được tạo ra (date_id, full_date, year, quarter, month, week_of_year, day) ở Available Input đều được tự động ánh xạ đúng vị trí sang Available Destination, cuối cùng nhấn OK.
+Hình 2.4.2.13: Kiểm tra ánh xạ dữ liệu tại thẻ Mappings
+Bước 14: 
+Quay về giao diện Data Flow tổng, nhấp chuột phải ra vùng trống và chọn lệnh Execute Task để tiến hành chạy thử bộ nạp dữ liệu cho DIM_DATE.
+Hình 2.4.2.14: Thực thi Data Flow Task nạp bảng DIM_DATE
+Bước 15: 
+Quá trình thực thi hoàn tất khi tất cả các component đều hiển thị dấu tích xanh. Điều này chứng nhận dữ liệu Dimension cho thời gian đã được đổ vào kho thành công.
+Hình 2.4.2.15: Tiến trình nạp dữ liệu hoàn tất với thông báo thành công
+ 
+ 
+2.4.3 Bảng DIM_TIME
+2.4.3 Bảng DIM_TIME
+Bước 1: 
+Kéo thả một component Data Flow Task vào không gian làm việc Control Flow, click chuột phải vào nó và nhấn Rename.
+Hình 2.4.3.1: Thêm component Data Flow Task và đổi tên
+Bước 2: 
+Tiến hành đổi tên đối tượng này thành DIM_TIME, sau đó click đúp để truy cập vào màn hình Data Flow.
+Hình 2.4.3.2: Truy cập giao diện Data Flow của DIM_TIME
+Bước 3: 
+Trong cửa sổ thiết kế Data Flow, lấy component Flat File Source từ thanh Toolbox thả vào. Khởi đầu, component này có cảnh báo màu đỏ vì chưa được cài đặt thông số.
+Hình 2.4.3.3: Kéo thả Flat File Source vào màn hình thiết kế
+Bước 4: 
+Click đúp vào Flat File Source để kích hoạt hộp thoại cấu hình (Editor). Tại phần Connection manager, nhấn vào danh sách thả xuống và chọn lại kết nối GLOBAL_WEATHER_SOURCE đã cấu hình từ phần trước.
+Hình 2.4.3.4: Tái sử dụng kết nối GLOBAL_WEATHER_SOURCE
+Bước 5: 
+Chuyển hướng sang thẻ Columns ở bảng chọn bên trái. Hủy chọn toàn bộ các trường dữ liệu, chỉ đánh dấu tích giữ lại trường last_updated để giảm tải bộ nhớ nạp. Sau đó bấm OK.
+Hình 2.4.3.5: Lọc giữ lại duy nhất trường last_updated
+Bước 6: 
+Tiếp tục thêm component Derived Column từ Toolbox vào luồng công việc. Liên kết mũi tên xanh từ Flat File Source sang component vừa thêm này.
+Hình 2.4.3.6: Kéo thả Derived Column và nối luồng dữ liệu
+Bước 7: 
+Mở hộp thoại thiết lập của Derived Column. Khai báo 3 cột dữ liệu mới bằng cách chọn <add as new column> và sử dụng hàm thời gian SSIS để bóc tách từ last_updated:
+- hour: DATEPART("hh",(DT_DBTIMESTAMP)last_updated)
+- minute: DATEPART("mi",(DT_DBTIMESTAMP)last_updated)
+- time_id: (DT_I4)(DATEPART("hh",(DT_DBTIMESTAMP)last_updated) * 100 + DATEPART("mi",(DT_DBTIMESTAMP)last_updated)) (tạo mã time_id gồm giờ và phút, ví dụ 13:15 sẽ thành 1315)
+Hình 2.4.3.7: Cấu hình trích xuất dữ liệu Giờ, Phút và tạo time_id
+Bước 8: 
+Kéo thả thành phần Sort từ Toolbox vào màn hình làm việc. Thực hiện nối dây luồng dữ liệu từ Derived Column sang Sort.
+Hình 2.4.3.8: Bổ sung component Sort vào luồng công việc
+Bước 9: 
+Mở bảng thuộc tính của Sort. Tích chọn cột time_id làm tiêu chí sắp xếp. Đừng quên tích vào ô tùy chọn 'Remove rows with duplicate sort values' ở góc trái phía dưới để xóa bỏ hoàn toàn các khung giờ bị lặp lại, sau đó nhấn OK.
+Hình 2.4.3.9: Cấu hình Sort để loại bỏ các bản ghi trùng lặp
+Bước 10: 
+Thêm đối tượng OLE DB Destination vào cửa sổ thiết kế, sau đó nối mũi tên luồng xanh từ Sort sang OLE DB Destination.
+Hình 2.4.3.10: Nối luồng dữ liệu sang OLE DB Destination
+Bước 11: 
+Click đúp vào OLE DB Destination để mở trình cấu hình. Tại tab Connection Manager, chọn kết nối dẫn tới DataWarehouse_GlobalWeatherRepository.
+Hình 2.4.3.11: Thiết lập kết nối trỏ đến Data Warehouse
+Bước 12: 
+Ở phần Data access mode, thiết lập kiểu nạp là 'Table or view - fast load'. Tiếp theo, thả danh sách và chọn bảng đích tương ứng là [dbo].[DIM_TIME].
+Hình 2.4.3.12: Lựa chọn bảng đích DIM_TIME và chế độ Fast load
+Bước 13: 
+Nhấp sang tab Mappings để kiểm tra việc ánh xạ dữ liệu. Chắc chắn rằng các trường mới sinh ra (time_id, hour, minute) ở cột Available Input đã được tự động kết nối tương ứng với các cột bên Available Destination. Nhấn OK để hoàn thành.
+Hình 2.4.3.13: Kiểm tra ánh xạ dữ liệu tại Mappings
+Bước 14: 
+Quay về giao diện Data Flow chính, click chuột phải vào vùng xám và chọn lệnh Execute Task để bắt đầu chạy tác vụ đẩy dữ liệu cho DIM_TIME.
+Hình 2.4.3.14: Khởi chạy luồng dữ liệu cho bảng DIM_TIME
+Bước 15: 
+Khi quá trình hoàn tất, toàn bộ component trên màn hình sẽ báo dấu tích màu xanh, xác nhận rằng tiến trình nạp bảng DIM_TIME đã chạy thành công.
+Hình 2.4.3.15: Tiến trình nạp dữ liệu hoàn thành báo tích xanh
+2.4.4 Bảng DIM_LOCATION
+2.4.4 Bảng DIM_LOCATION
+Bước 1: 
+Thực hiện thao tác kéo thả Data Flow Task vào màn hình Control Flow. Sau đó, nhấp chuột phải vào component này và chọn Rename.
+Hình 2.4.4.1: Thêm mới và đổi tên component Data Flow Task
+Bước 2: 
+Tiến hành đổi tên tác vụ thành DIM_LOCATION. Click đúp chuột vào tác vụ để mở giao diện cấu hình luồng dữ liệu (Data Flow).
+Hình 2.4.4.2: Truy cập vào giao diện Data Flow của DIM_LOCATION
+Bước 3: 
+Tại thanh Toolbox, kéo thả thành phần Flat File Source vào màn hình. Lúc này, do chưa được cấp thông số cấu hình, component sẽ hiện biểu tượng cảnh báo lỗi màu đỏ.
+Hình 2.4.4.3: Kéo thả Flat File Source vào luồng công việc
+Bước 4: 
+Mở hộp thoại cấu hình (Editor) bằng cách nháy đúp vào Flat File Source. Tại mục Connection manager, mở danh sách và chọn kết nối GLOBAL_WEATHER_SOURCE đã được khởi tạo từ các bước trước.
+Hình 2.4.4.4: Gắn kết nối GLOBAL_WEATHER_SOURCE cho Source
+Bước 5: 
+Di chuyển đến mục Columns nằm ở cột bên trái. Để tối ưu hóa quy trình nạp, hãy bỏ chọn các trường không cần thiết và chỉ giữ lại 5 trường dữ liệu quan trọng: location_name, latitude, longitude, timezone và country_name. Nhấn OK.
+Hình 2.4.4.5: Lọc giữ lại 5 trường dữ liệu quan trọng
+Bước 6: 
+Kéo thả component Lookup từ Toolbox vào luồng làm việc (mục đích để truy xuất giá trị country_id). Tiến hành nối mũi tên luồng dữ liệu màu xanh từ Flat File Source sang Lookup.
+Hình 2.4.4.6: Bổ sung component Lookup và nối luồng
+Bước 7: 
+Nháy đúp vào component Lookup để mở trình Editor. Ở thẻ Connection, chọn kết nối OLE DB đến Data Warehouse. Tại mục Table or view, chọn bảng cần tham chiếu là [dbo].[DIM_COUNTRY].
+Hình 2.4.4.7: Chọn bảng tham chiếu DIM_COUNTRY
+Bước 8: 
+Chuyển sang thẻ Columns của Lookup. Dùng chuột kéo nối trường country_name từ bảng Available Input Columns sang trường tương ứng ở bảng Available Lookup Columns. Tiếp theo, tích chọn vào trường country_id ở bảng bên phải để trích xuất khóa ngoại. Nhấn OK để xác nhận.
+Hình 2.4.4.8: Cấu hình ánh xạ trường để truy xuất country_id
+Bước 9: 
+Thêm component Sort vào luồng bằng cách kéo thả từ Toolbox. Khi bạn nối mũi tên từ Lookup sang Sort, hộp thoại Input Output Selection sẽ bật lên. Hãy chọn 'Lookup Match Output' rồi nhấn OK.
+Hình 2.4.4.9: Chọn đầu ra Lookup Match Output khi nối luồng sang Sort
+Bước 10: 
+Kết quả hiển thị luồng dữ liệu đã được kết nối chuẩn xác thông qua đầu ra Lookup Match Output.
+Hình 2.4.4.10: Kết quả luồng dữ liệu sau khi kết nối
+Bước 11: 
+Click đúp vào component Sort để mở cấu hình. Đánh dấu chọn trường location_name trong danh sách các cột. Điều kiện tiên quyết là phải tích vào hộp thoại 'Remove rows with duplicate sort values' ở góc dưới bên trái để lọc bỏ các địa danh trùng lặp, sau đó nhấn OK.
+Hình 2.4.4.11: Cấu hình Sort loại bỏ trùng lặp dựa trên location_name
+Bước 12: 
+Kéo đối tượng OLE DB Destination từ Toolbox vào luồng dữ liệu, rồi nối mũi tên từ component Sort sang đối tượng này.
+Hình 2.4.4.12: Kéo thả và nối luồng cho OLE DB Destination
+Bước 13: 
+Nháy đúp để mở bảng cấu hình OLE DB Destination Editor. Ở tab Connection Manager, chọn đúng kết nối trỏ về CSDL DataWarehouse_GlobalWeatherRepository.
+Hình 2.4.4.13: Trỏ kết nối về CSDL Data Warehouse
+Bước 14: 
+Trong thuộc tính Data access mode, thiết lập kiểu nạp là 'Table or view - fast load'. Ở ô chỉ định bảng đích, hãy chọn bảng [dbo].[DIM_LOCATION].
+Hình 2.4.4.14: Thiết lập bảng đích DIM_LOCATION với chế độ fast load
+Bước 15: 
+Chuyển sang tab Mappings để rà soát việc ánh xạ. Đảm bảo các cột location_name, latitude, longitude, timezone và country_id (từ Lookup) đều được nối chính xác giữa Available Input và Available Destination. Cột location_id tự động tăng nên sẽ được bỏ qua. Nhấn OK để lưu thiết lập.
+Hình 2.4.4.15: Hoàn thiện ánh xạ dữ liệu tại thẻ Mappings
+Bước 16: 
+Quay lại không gian Data Flow tổng, nhấp chuột phải tại vùng xám và chọn Execute Task để khởi chạy quy trình nạp dữ liệu cho bảng này.
+Hình 2.4.4.16: Chạy thử luồng xử lý nạp bảng DIM_LOCATION
+Bước 17: 
+Quy trình kết thúc thành công khi mọi component đều được đánh dấu tích xanh.
+Hình 2.4.4.17: Trạng thái tích xanh báo hiệu việc nạp dữ liệu thành công
+ 
+ 
+2.4.5 Bảng DIM_WEATHER_CONDITION
+2.4.5 Bảng DIM_WEATHER_CONDITION
+Bước 1: 
+Tại không gian Control Flow, kéo đối tượng Data Flow Task từ thanh công cụ thả vào màn hình làm việc. Sau đó, nhấp chuột phải và chọn lệnh Rename.
+Hình 2.4.5.1: Thêm component Data Flow Task và thực hiện đổi tên
+Bước 2: 
+Tiến hành đổi tên đối tượng này thành DIM_WEATHER_CONDITION. Nháy đúp chuột vào tác vụ để chuyển sang giao diện cấu hình Data Flow.
+Hình 2.4.5.2: Data Flow của DIM_WEATHER_CONDITION
+Bước 3: 
+Bổ sung component Flat File Source từ Toolbox vào màn hình Data Flow. Khởi đầu, component này sẽ có biểu tượng lỗi chữ X đỏ vì chưa được thiết lập dữ liệu đầu vào.
+Hình 2.4.5.3: Kéo thả Flat File Source vào màn hình thiết kế
+Bước 4: 
+Mở hộp thoại trình soạn thảo (Editor) bằng cách click đúp vào Flat File Source. Trong mục Connection manager, thả danh sách và chọn lại kết nối GLOBAL_WEATHER_SOURCE đã cấu hình.
+Hình 2.4.5.4: Lựa chọn kết nối GLOBAL_WEATHER_SOURCE đã có
+Bước 5: 
+Chuyển hướng sang thẻ Columns. Hãy hủy chọn toàn bộ các cột không dùng đến, chỉ giữ lại duy nhất trường condition_text (dùng để lưu trữ mô tả tình trạng thời tiết). Bấm OK để xác nhận.
+Hình 2.4.5.5: Giữ lại duy nhất trường condition_text
+Bước 6: 
+Tiếp theo, kéo component Sort từ Toolbox thả vào luồng công việc nhằm mục đích lọc bỏ trùng lặp. Nối dây luồng dữ liệu (màu xanh dương) từ Flat File Source sang component Sort.
+Hình 2.4.5.6: Thêm component Sort và nối dây luồng dữ liệu
+Bước 7: 
+Mở hộp thoại cấu hình của Sort. Tích chọn trường condition_text trong danh sách các cột. Để đảm bảo dữ liệu là duy nhất, bắt buộc phải tích chọn ô 'Remove rows with duplicate sort values' ở góc dưới cùng bên trái, sau đó nhấn OK.
+Hình 2.4.5.7: Cấu hình Sort để loại bỏ các trạng thái thời tiết lặp lại
+Bước 8: 
+Kéo thả OLE DB Destination vào không gian làm việc. Tiếp tục nối mũi tên luồng xanh từ thành phần Sort sang đối tượng OLE DB Destination này.
+Hình 2.4.5.8: Kéo thả đối tượng OLE DB Destination vào luồng
+Bước 9: 
+Click đúp để mở trình quản lý OLE DB Destination Editor. Ở tab Connection Manager, hãy chọn đúng kết nối đang trỏ về DataWarehouse_GlobalWeatherRepository.
+Hình 2.4.5.9: Chọn kết nối đến kho dữ liệu Data Warehouse
+Bước 10: 
+Chuyển xuống mục Data access mode, lựa chọn thiết lập 'Table or view - fast load' để tăng tốc độ nạp. Tại mục tên bảng, hãy chỉ định bảng đích là [dbo].[DIM_WEATHER_CONDITION].
+Hình 2.4.5.10: Chọn bảng đích DIM_WEATHER_CONDITION và chế độ fast load
+Bước 11: 
+Chuyển qua tab Mappings để thực thi việc ánh xạ dữ liệu. Chắc chắn rằng trường condition_text bên Available Input đã được nối chuẩn xác sang trường condition_text của Available Destination. Đối với cột khóa chính condition_id, hãy để nguyên (<ignore>) vì nó có thuộc tính tự động tăng. Nhấn OK để lưu trữ cấu hình.
+Hình 2.4.5.11: Kiểm tra và thực hiện ánh xạ trường dữ liệu
+Bước 12: 
+Quay lại màn hình Data Flow tổng thể, nhấp chuột phải vào vị trí trống bất kỳ và chọn Execute Task để khởi động bộ nạp dữ liệu.
+Hình 2.4.5.12: Kích hoạt chạy thử luồng dữ liệu (Execute Task)
+Bước 13: 
+Khi quy trình chạy xong, nếu toàn bộ các component đều đổi sang biểu tượng dấu tích xanh, điều đó khẳng định thao tác nạp dữ liệu cho bảng DIM_WEATHER_CONDITION đã thành công.
+Hình 2.4.5.13: Quá trình nạp dữ liệu diễn ra thành công với các tích xanh
+2.4.6 Bảng DIM_WIND_DIRECTION
+2.4.6 Bảng DIM_WIND_DIRECTION
+Bước 1: 
+Kéo thả Data Flow Task từ thanh công cụ sang màn hình làm việc Control Flow. Kế tiếp, nhấp chuột phải vào component vừa tạo và chọn Rename.
+Hình 2.4.6.1: Khởi tạo Data Flow Task và đổi tên tác vụ
+Bước 2: 
+Tiến hành đổi tên thành DIM_WIND_DIRECTION, sau đó nhấp đúp chuột để kích hoạt giao diện thiết kế Data Flow.
+Hình 2.4.6.2: Mở không gian thiết kế Data Flow cho DIM_WIND_DIRECTION
+Bước 3: 
+Bổ sung component Flat File Source từ Toolbox. Ở trạng thái ban đầu, hệ thống sẽ báo lỗi bằng biểu tượng chữ X màu đỏ do component chưa được liên kết dữ liệu.
+Hình 2.4.6.3: Thêm component Flat File Source vào luồng làm việc
+Bước 4: 
+Mở hộp thoại trình cấu hình bằng cách nhấp đúp vào Flat File Source. Tại mục Connection manager, hãy lựa chọn kết nối GLOBAL_WEATHER_SOURCE đã thiết lập trước đó.
+Hình 2.4.6.4: Chọn trình quản lý kết nối GLOBAL_WEATHER_SOURCE
+Bước 5: 
+Chuyển sang thẻ Columns. Hãy bỏ chọn tất cả các trường dữ liệu không cần thiết, chỉ tích chọn và giữ lại duy nhất trường wind_direction (chứa thông tin về hướng gió). Nhấn OK.
+Hình 2.4.6.5: Cấu hình chỉ lấy duy nhất cột wind_direction
+Bước 6: 
+Để loại bỏ các bản ghi trùng lặp, kéo thêm component Sort từ Toolbox thả vào luồng dữ liệu. Nối mũi tên màu xanh từ Flat File Source sang component Sort.
+Hình 2.4.6.6: Kéo thả thành phần Sort và nối dây luồng dữ liệu
+Bước 7: 
+Mở hộp thoại Sort Transformation Editor. Tích chọn trường wind_direction trong danh sách cột. Hãy nhớ đánh dấu vào tùy chọn 'Remove rows with duplicate sort values' ở góc trái phía dưới để xóa bỏ hoàn toàn các hướng gió lặp lại, rồi nhấn OK.
+Hình 2.4.6.7: Thiết lập bộ lọc trùng lặp hướng gió trong Sort
+Bước 8: 
+Thêm đối tượng OLE DB Destination vào không gian Data Flow. Nối dây luồng công việc từ component Sort sang đích đến này.
+Hình 2.4.6.8: Bổ sung OLE DB Destination vào luồng
+Bước 9: 
+Click đúp vào OLE DB Destination để mở màn hình thiết lập. Ở thẻ Connection Manager, chọn kết nối dẫn tới DataWarehouse_GlobalWeatherRepository.
+Hình 2.4.6.9: Trỏ kết nối về hệ quản trị cơ sở dữ liệu Data Warehouse
+Bước 10: 
+Trong phần Data access mode, thiết lập chế độ nạp nhanh bằng cách chọn 'Table or view - fast load'. Tiếp đó, lựa chọn bảng đích là [dbo].[DIM_WIND_DIRECTION].
+Hình 2.4.6.10: Thiết lập chế độ fast load và chọn bảng DIM_WIND_DIRECTION
+Bước 11: 
+Chuyển sang tab Mappings để kiểm tra quá trình ánh xạ dữ liệu. Chắc chắn rằng cột wind_direction từ Available Input đã nối chính xác sang Available Destination. Cột khóa chính wind_direction_id được tự động tăng nên hãy để nguyên trạng thái <ignore>. Bấm OK để lưu lại.
+Hình 2.4.6.11: Kiểm tra cấu hình ánh xạ dữ liệu
+Bước 12: 
+Trở về màn hình Data Flow, click chuột phải vào vùng trống rồi chọn Execute Task để khởi động bộ nạp.
+Hình 2.4.6.12: Kích hoạt chạy luồng nạp dữ liệu (Execute Task)
+Bước 13: 
+Quy trình thực thi hoàn thiện khi mọi component đều hiện dấu tích xanh. Điều này chứng nhận dữ liệu về hướng gió đã được nạp thành công vào Data Warehouse.
+Hình 2.4.6.13: Toàn bộ quá trình nạp dữ liệu hoàn tất với thông báo thành công
+2.4.7 Bảng DIM_MOON_PHASE
+2.4.7 Bảng DIM_MOON_PHASE
+Bước 1: 
+Thao tác kéo thả component Data Flow Task vào phân vùng Control Flow. Tiếp theo, nhấp chuột phải vào component này và chọn Rename.
+Hình 2.4.7.1: Thêm component Data Flow Task và đổi tên
+Bước 2: 
+Đổi tên component vừa tạo thành DIM_MOON_PHASE. Sau đó, nhấp đúp chuột vào tác vụ để khởi động không gian thiết kế Data Flow.
+Hình 2.4.7.2: Mở không gian làm việc Data Flow của DIM_MOON_PHASE
+Bước 3: 
+Ở thanh Toolbox, chọn và kéo Flat File Source vào màn hình. Lúc này, do chưa thiết lập cấu hình, component sẽ hiển thị dấu X cảnh báo màu đỏ.
+Hình 2.4.7.3: Kéo thả Flat File Source vào màn hình thiết kế
+ 
+Bước 4: 
+Mở cửa sổ Editor bằng cách click đúp vào Flat File Source. Tại mục Connection manager, thả danh sách và chọn lại kết nối GLOBAL_WEATHER_SOURCE đã cấu hình.
+Hình 2.4.7.4: Lựa chọn trình kết nối GLOBAL_WEATHER_SOURCE
+Bước 5: 
+Chuyển sang thẻ Columns bên menu trái. Bỏ chọn toàn bộ các trường dữ liệu, chỉ đánh dấu tích giữ lại trường moon_phase (chứa dữ liệu pha mặt trăng) để tối ưu luồng dữ liệu. Bấm OK.
+Hình 2.4.7.5: Cấu hình chỉ trích xuất duy nhất trường moon_phase
+Bước 6: 
+Thêm component Sort từ thanh Toolbox vào màn hình làm việc nhằm loại bỏ các bản ghi trùng. Tiến hành nối luồng mũi tên màu xanh từ Flat File Source sang component Sort.
+Hình 2.4.7.6: Thêm component Sort và kết nối luồng dữ liệu
+Bước 7: 
+Click đúp vào Sort để thiết lập. Đánh dấu tích vào trường moon_phase. Yêu cầu bắt buộc là phải chọn ô 'Remove rows with duplicate sort values' ở góc trái phía dưới để lọc sạch các dữ liệu lặp lại. Nhấn OK.
+Hình 2.4.7.7: Thiết lập Sort để loại bỏ các pha mặt trăng trùng lặp
+Bước 8: 
+Bổ sung đối tượng OLE DB Destination vào luồng công việc. Kéo mũi tên xanh để liên kết từ thành phần Sort sang đích đến này.
+Hình 2.4.7.8: Kéo thả OLE DB Destination vào không gian Data Flow
+Bước 9: 
+Kích hoạt giao diện OLE DB Destination Editor bằng cách nháy đúp. Ở thẻ Connection Manager, chọn cấu hình kết nối trực tiếp đến DataWarehouse_GlobalWeatherRepository.
+Hình 2.4.7.9: Khai báo kết nối đến cơ sở dữ liệu Data Warehouse
+Bước 10: 
+Định cấu hình Data access mode sang chế độ nạp nhanh 'Table or view - fast load'. Tiếp theo, chọn bảng đích cần đổ dữ liệu là [dbo].[DIM_MOON_PHASE].
+Hình 2.4.7.10: Thiết lập chế độ fast load cho bảng đích DIM_MOON_PHASE
+Bước 11: 
+Điều hướng sang thẻ Mappings để kiểm tra quá trình ánh xạ (mapping). Đảm bảo trường moon_phase từ Available Input đã nối chuẩn xác sang trường moon_phase của Available Destination. Khóa chính moon_phase_id sẽ được thiết lập <ignore> do có thuộc tính tự động tăng. Nhấn OK để xác nhận.
+Hình 2.4.7.11: Kiểm tra cấu hình ánh xạ trường dữ liệu
+Bước 12: 
+Quay trở lại giao diện Data Flow tổng thể, nhấp chuột phải tại vùng trống bất kỳ và chọn Execute Task để khởi chạy thử quy trình nạp.
+Hình 2.4.7.12: Kích hoạt chạy luồng nạp dữ liệu (Execute Task)
+Bước 13: 
+Quy trình thực thi hoàn thiện thành công khi toàn bộ các component đổi sang biểu tượng dấu tích xanh, minh chứng dữ liệu về pha mặt trăng đã nạp trọn vẹn vào kho chứa.
+Hình 2.4.7.13: Quá trình nạp dữ liệu báo thành công với trạng thái tích xanh
+2.4.8 Bảng DIM_ASTRONOMY
+2.4.8 Bảng DIM_ASTRONOMY
+Bước 1: 
+Kéo thả component Data Flow Task từ Toolbox vào màn hình làm việc Control Flow. Sau đó, nhấp chuột phải vào component này và chọn Rename.
+Hình 2.4.8.1: Thêm mới và đổi tên component Data Flow Task
+Bước 2: 
+Tiến hành đổi tên tác vụ thành DIM_ASTRONOMY, tiếp đó nhấp đúp chuột để mở giao diện thiết kế luồng dữ liệu.
+Hình 2.4.8.2: Mở không gian thiết kế Data Flow cho DIM_ASTRONOMY
+Bước 3: 
+Tại thanh Toolbox, kéo thả thành phần Flat File Source vào luồng làm việc. Ban đầu, component này sẽ có biểu tượng lỗi màu đỏ báo hiệu chưa được cấu hình.
+Hình 2.4.8.3: Kéo thả Flat File Source vào luồng công việc
+Bước 4: 
+Mở hộp thoại thiết lập (Editor) bằng cách nháy đúp vào Flat File Source. Tại mục Connection manager, thả danh sách và chọn kết nối GLOBAL_WEATHER_SOURCE đã khởi tạo.
+Hình 2.4.8.4: Gắn kết nối GLOBAL_WEATHER_SOURCE cho luồng
+Bước 5: 
+Chuyển sang thẻ Columns bên menu trái. Bỏ chọn toàn bộ các cột dư thừa, chỉ tích giữ lại 5 trường dữ liệu thiên văn: sunrise, sunset, moonrise, moonset và moon_phase. Bấm OK để hoàn tất.
+Hình 2.4.8.5: Tối ưu dữ liệu bằng cách giữ lại 5 trường thiên văn
+Bước 6: 
+Kéo thả component Lookup từ Toolbox vào không gian làm việc nhằm dò tìm khóa ngoại moon_phase_id. Thực hiện nối dây luồng dữ liệu màu xanh từ Flat File Source sang Lookup.
+Hình 2.4.8.6: Bổ sung component Lookup và nối luồng
+Bước 7: 
+Nháy đúp vào Lookup để cấu hình. Ở thẻ Connection, thiết lập kết nối OLE DB hướng đến kho dữ liệu. Kế đến, ở phần Table or view, chọn bảng tham chiếu là [dbo].[DIM_MOON_PHASE].
+Hình 2.4.8.7: Chọn bảng tham chiếu DIM_MOON_PHASE
+Bước 8: 
+Điều hướng sang thẻ Columns của component Lookup. Kéo thả để nối trường moon_phase từ bảng bên trái (Available Input Columns) sang trường tương ứng ở bảng bên phải (Available Lookup Columns). Tiếp theo, đánh dấu tích chọn cột moon_phase_id để trích xuất khóa ngoại. Bấm OK.
+Hình 2.4.8.8: Cấu hình ánh xạ trường để truy xuất khóa ngoại
+Bước 9: 
+Thêm component Sort vào luồng công việc từ thanh Toolbox. Khi tiến hành nối luồng từ Lookup sang Sort, một cửa sổ Input Output Selection sẽ bật lên, bạn chọn 'Lookup Match Output' và nhấn OK.
+Hình 2.4.8.9: Chọn đầu ra Lookup Match Output khi liên kết
+Bước 10: 
+Giao diện lúc này sẽ hiển thị đường liên kết thành công thông qua đầu ra Lookup Match Output.
+Hình 2.4.8.10: Trạng thái luồng dữ liệu sau khi kết nối Lookup
+Bước 11: 
+Click đúp vào Sort để thiết lập bộ lọc. Tích chọn toàn bộ các cột cần lọc (sunrise, sunset, moonrise, moonset, moon_phase_id). Để loại bỏ hoàn toàn các bản ghi bị trùng, bắt buộc phải đánh dấu vào ô 'Remove rows with duplicate sort values' ở góc dưới bên trái, sau đó nhấn OK.
+Hình 2.4.8.11: Thiết lập Sort để lọc sạch dữ liệu trùng lặp
+Bước 12: 
+Kéo đối tượng OLE DB Destination vào luồng công việc. Kéo mũi tên xanh để liên kết từ thành phần Sort sang đối tượng này.
+Hình 2.4.8.12: Thêm OLE DB Destination và nối dây luồng dữ liệu
+Bước 13: 
+Kích hoạt giao diện OLE DB Destination Editor. Ở thẻ Connection Manager, chọn cấu hình kết nối hướng tới DataWarehouse_GlobalWeatherRepository.
+Hình 2.4.8.13: Trỏ kết nối về Data Warehouse
+Bước 14: 
+Tại mục Data access mode, lựa chọn chế độ nạp nhanh 'Table or view - fast load'. Tiếp theo, chỉ định đích đến là bảng [dbo].[DIM_ASTRONOMY].
+Hình 2.4.8.14: Chọn bảng đích DIM_ASTRONOMY và chế độ fast load
+Bước 15: 
+Chuyển sang tab Mappings để kiểm duyệt ánh xạ. Xác nhận rằng 5 cột (sunrise, sunset, moonrise, moonset, moon_phase_id) đã được tự động nối đúng chuẩn. Cột khóa chính astronomy_id cần được thiết lập <ignore> vì có tính chất tự động tăng. Nhấn OK để lưu thiết lập.
+Hình 2.4.8.15: Hoàn thiện ánh xạ dữ liệu tại thẻ Mappings
+Bước 16: 
+Quay về giao diện Data Flow chính, nhấp chuột phải vào vị trí xám bất kỳ và chọn Execute Task để kiểm thử quy trình nạp.
+Hình 2.4.8.16: Chạy thử luồng xử lý nạp bảng (Execute Task)
+Bước 17: 
+Quá trình hoàn tất thành công khi toàn bộ các component đều xuất hiện biểu tượng dấu tích xanh, minh chứng việc nạp dữ liệu thiên văn và khóa ngoại đã hoàn thiện.
+Hình 2.4.8.17: Trạng thái tích xanh báo hiệu việc nạp thành công
+ 
+ 
+ 
+2.4.9 Bảng FACT_WEATHER
+2.4.9 Bảng FACT_WEATHER
+Bước 1: 
+Kéo thả component Data Flow Task vào màn hình Control Flow. Sau đó, nhấp chuột phải và chọn lệnh Rename.
+Hình 2.4.9.1: Khởi tạo component Data Flow Task
+Bước 2: 
+Tiến hành đổi tên tác vụ thành FACT_WEATHER, tiếp đó nhấp đúp chuột để mở không gian thiết kế Data Flow.
+Hình 2.4.9.2: Giao diện Data Flow cho FACT_WEATHER
+Bước 3: 
+Ở thanh Toolbox, thêm component Flat File Source vào luồng làm việc. Component này ban đầu sẽ có biểu tượng cảnh báo màu đỏ.
+Hình 2.4.9.3: Kéo thả Flat File Source vào luồng nạp
+Bước 4: 
+Nháy đúp vào Flat File Source để mở bảng cấu hình Editor. Tại Connection manager, chọn kết nối GLOBAL_WEATHER_SOURCE đã cấu hình từ trước.
+Hình 2.4.9.4: Gắn kết nối nguồn GLOBAL_WEATHER_SOURCE
+Bước 5: 
+Chuyển sang tab Columns. Đối với bảng Fact, chúng ta cần loại bỏ các cột không dùng và đánh dấu chọn 23 cột quan trọng bao gồm: cột để tính ngày giờ, cột dò khóa ngoại và các cột đo lường (Measures). Nhấn OK.
+- Cột để tạo ngày giờ: last_updated
+- Cột để dò tìm khoá ngoại: location_name, condition_text, wind_direction, sunrise, sunset, moonrise, moonset.
+- Cột dữ liệu đo lường (Measures): temperature_celsius, wind_kph, wind_degree, pressure_mb, precip_mm, humidity, cloud, feels_like_celsius, visibility_km, uv_index, gust_kph, air_quality_ozone, air_quality_pm25, air_quality_pm10, moon_illumination.
+Sau khi đã tích đủ 23 cột trên, nhấn OK để hoàn tất.
+Hình 2.4.9.5: Lựa chọn 23 trường dữ liệu thiết yếu
+Bước 6: 
+Tiếp tục kéo component Derived Column từ Toolbox vào luồng và nối từ Flat File Source sang. Component này giúp tự động tính toán khóa ngoại cho thời gian.
+Hình 2.4.9.6: Thêm Derived Column để sinh khóa thời gian
+Bước 7: 
+Mở hộp thoại Derived Column. Chọn <add as new column> và sử dụng các hàm SSIS để sinh ra hai cột date_id và time_id từ trường last_updated.
+- date_id: (DT_I4)(YEAR((DT_DBTIMESTAMP)last_updated) * 10000 + MONTH((DT_DBTIMESTAMP)last_updated) * 100 + DAY((DT_DBTIMESTAMP)last_updated))
+- time_id: (DT_I4)(DATEPART("hh",(DT_DBTIMESTAMP)last_updated) * 100 + DATEPART("mi",(DT_DBTIMESTAMP)last_updated))
+Hình 2.4.9.7: Cấu hình biểu thức thời gian cho date_id và time_id
+Bước 8: 
+Kéo thả 4 component Lookup vào không gian làm việc. Thực hiện nối luồng dữ liệu (chọn Lookup Match Output) thành chuỗi tuần tự: Derived Column -> Lookup Location -> Lookup Condition -> Lookup Wind -> Lookup Astronomy.
+Hình 2.4.9.8: Tạo chuỗi 4 thành phần Lookup liên tiếp
+Bước 9: 
+Mở component Lookup Location (đầu tiên). Tại thẻ Connection, thiết lập kết nối OLE DB hướng đến kho dữ liệu, trỏ kết nối đến bảng [dbo].[DIM_LOCATION].
+Hình 2.4.9.9: Lookup Location - Trỏ đến DIM_LOCATION
+Bước 10: 
+Sang thẻ Columns của Lookup Location. Kéo nối location_name (trái) với location_name (phải) và đánh dấu tích để lấy ra location_id. Nhấn OK.
+Hình 2.4.9.10: Lookup Location - Ánh xạ để lấy location_id
+Bước 11: 
+Nháy đúp chuột để truy cập vào component Lookup Condition.
+Hình 2.4.9.11: Truy cập thiết lập Lookup Condition
+Bước 12: 
+Tại thẻ Connection của Lookup Condition, kết nối OLE DB hướng đến kho dữ liệu, thiết lập kết nối đến bảng [dbo].[DIM_WEATHER_CONDITION].
+Hình 2.4.9.12: Lookup Condition - Trỏ đến DIM_WEATHER_CONDITION
+Bước 13: 
+Chuyển qua thẻ Columns của Lookup Condition. Ánh xạ condition_text (trái) với condition_text (phải), đồng thời tích chọn để trích xuất condition_id. Bấm OK.
+Hình 2.4.9.13: Lookup Condition - Ánh xạ để lấy condition_id
+Bước 14: 
+Nháy đúp chuột vào component Lookup Wind.
+Hình 2.4.9.14: Truy cập thiết lập Lookup Wind
+Bước 15: 
+Tại thẻ Connection của Lookup Wind, thiết lập kết nối OLE DB hướng đến kho dữ liệu, cấu hình để tham chiếu đến bảng [dbo].[DIM_WIND_DIRECTION].
+Hình 2.4.9.15: Lookup Wind - Trỏ đến DIM_WIND_DIRECTION
+Bước 16: 
+Ở thẻ Columns của Lookup Wind. Ánh xạ wind_direction (trái) với wind_direction (phải) và tích lấy trường wind_direction_id. Nhấn OK.
+Hình 2.4.9.16: Lookup Wind - Ánh xạ để lấy wind_direction_id
+Bước 17: 
+Nháy đúp chuột vào component Lookup Astronomy cuối cùng.
+Hình 2.4.9.17: Truy cập thiết lập Lookup Astronomy
+Bước 18: 
+Tại thẻ Connection của Lookup Astronomy, thiết lập kết nối OLE DB hướng đến kho dữ liệu,  chỉ định tham chiếu đến bảng [dbo].[DIM_ASTRONOMY].
+Hình 2.4.9.18: Lookup Astronomy - Trỏ đến DIM_ASTRONOMY
+Bước 19: 
+Sang thẻ Columns của Lookup Astronomy. Ánh xạ lần lượt sunrise, sunset, moonrise, moonset và tích chọn trường astronomy_id. Nhấn OK.
+Hình 2.4.9.19: Lookup Astronomy - Ánh xạ lấy astronomy_id
+Bước 20: 
+Kéo đối tượng OLE DB Destination từ Toolbox. Thực hiện nối luồng dữ liệu cuối cùng từ Lookup Astronomy (dùng Lookup Match Output) sang đích đến này.
+Hình 2.4.9.20: Nối chuỗi dữ liệu cuối cùng sang OLE DB Destination
+ 
+Bước 21: 
+Kích hoạt OLE DB Destination Editor. Chọn kết nối Data Warehouse, đặt Data access mode thành 'Table or view - fast load' và chọn bảng đích [dbo].[FACT_WEATHER].
+Hình 2.4.9.21: Cấu hình nạp bảng FACT_WEATHER với fast load
+Bước 22: 
+Chuyển sang thẻ Mappings. Kiểm tra lại toàn bộ các khóa ngoại (date_id, time_id, location_id, v.v.) cùng các cột đo lường đã nối chuẩn xác. Để nguyên weather_id (<ignore>). Nhấn OK.
+Hình 2.4.9.22: Thực hiện ánh xạ toàn bộ khóa ngoại và biến đo lường
+Bước 23: 
+Trở lại màn hình Data Flow tổng thể, nhấp chuột phải và chọn Execute Task để khởi động luồng nạp dữ liệu vào bảng Fact.
+Hình 2.4.9.23: Khởi chạy quá trình nạp bảng Fact 
+Bước 24: 
+Quy trình kết thúc thành công với trạng thái toàn bộ component hiện dấu tích xanh. Khẳng định quy trình nạp dữ liệu Fact đã hoàn tất.
+Hình 2.4.9.24: Hoàn thành nạp dữ liệu FACT_WEATHER thành công
+2.5 Thiết lập ràng buộc ưu tiêN
+2.5 Thiết lập ràng buộc ưu tiên
+Bước 1: 
+Chuyển sang màn hình Control Flow tổng. Tiến hành thiết lập trình tự thực thi bằng cách kéo nối các mũi tên luồng điều hướng màu xanh (Precedence Constraints) giữa các tác vụ (tasks), qua đó định hình cấu trúc chạy xuyên suốt của kho dữ liệu.
+Hình 2.5.1: Xây dựng ràng buộc ưu tiên (Precedence Constraints) cho toàn bộ luồng
+Bước 2: 
+Tiến hành chạy toàn bộ quy trình nạp dữ liệu bằng cách click vào nút Start nằm trên thanh công cụ chính của Visual Studio.
+Hình 2.5.2: Khởi động quy trình nạp tự động bằng lệnh Start
+Bước 3: 
+Khi tất cả các hộp tác vụ trên luồng Control Flow đều chuyển sang trạng thái tích xanh, quá trình vận hành tích hợp dữ liệu được xác nhận thành công. Dữ liệu đã được đổ đầy vào Data Warehouse mà không gặp bất cứ xung đột khóa ngoại hay lỗi gián đoạn nào.
+Hình 2.5.3: Trạng thái tích xanh xác nhận chu trình nạp dữ liệu vận hành thành công
+2.6 Kết quả SSIS
+2.6.1 Kết quả bảng DIM_COUNTRY
+2.6.1 Kết quả bảng DIM_COUNTRY
+Hình 2.6.2.1: Kết quả truy vấn dữ liệu bảng DIM_DATE
+2.6.2 Kết quả bảng DIM_DATE
+2.6.2 Kết quả bảng DIM_DATE
+Hình 2.6.3.1: Kết quả truy vấn dữ liệu bảng DIM_DATE
+2.6.3 Kết quả bảng DIM_TIME
+2.6.3 Kết quả bảng DIM_TIME
+Hình 2.6.3.1: Kết quả truy vấn dữ liệu bảng DIM_TIME
+2.6.4 Kết quả bảng DIM_LOCATION
+2.6.4 Kết quả bảng DIM_LOCATION
+Hình 2.6.4.1: Kết quả truy vấn dữ liệu bảng DIM_WEATHER_CONDITION
+2.6.5 Kết quả bảng DIM_WEATHER_CONDITION
+2.6.5 Kết quả bảng DIM_WEATHER_CONDITION
+Hình 2.6.5.1: Kết quả truy vấn dữ liệu bảng DIM_WIND_DIRECTION
+2.6.6 Kết quả bảng DIM_WIND_DIRECTION
+2.6.6 Kết quả bảng DIM_WIND_DIRECTION
+Hình 2.6.6.1: Kết quả truy vấn dữ liệu bảng DIM_MOON_PHASE
+2.6.7 Kết quả bảng DIM_MOON_PHASE
+2.6.7 Kết quả bảng DIM_MOON_PHASE
+Hình 2.6.7.1: Kết quả truy vấn dữ liệu bảng DIM_LOCATION
+2.6.8 Kết quả bảng DIM_ASTRONOMY
+2.6.8 Kết quả bảng DIM_ASTRONOMY
+Hình 2.6.8.1: Kết quả truy vấn dữ liệu bảng DIM_ASTRONOMY
+2.6.9 Kết quả bảng FACT_WEATHER
+2.6.9 Kết quả bảng FACT_WEATHER
+Hình 2.6.9.1: Kết quả truy vấn dữ liệu bảng trung tâm FACT_WEATHER
+CHƯƠNG 3. THỰC HIỆN PHÂN TÍCH TRÊN KHO DỮ LIỆU
+3.1. Tạo project SSAS mới
+3.1. Tạo project SSAS mới
+Bước 1: 
+Khởi động phần mềm Visual Studio, tại màn hình chào mừng, chọn mục 'Create a new project'.
+Hình 3.1.1: Bắt đầu tiến trình tạo dự án mới trên Visual Studio
+Bước 2: 
+Tại thanh tìm kiếm của cửa sổ tạo mới dự án, tìm và chọn 'Analysis Services Multidimensional’. Đây là công cụ chuyên dụng của SSAS để xây dựng các khối (Cubes) và mô hình đa chiều OLAP. Nhấn Next để tiếp tục.
+Hình 3.1.2: Lựa chọn mẫu dự án Analysis Services Multidimensional
+Bước 3: 
+Trong giao diện Configure your new project, tiến hành đặt tên dự án là SSASProject_GlobalWeatherRepository và chỉ định đường dẫn lưu trữ tại D:\olap\. Đồng thời, đánh dấu vào tùy chọn 'Place solution and project in the same directory' để dễ dàng quản lý file. Nhấn Create để khởi tạo.
+Hình 3.1.3: Định cấu hình tên gọi và thư mục lưu trữ cho đồ án
+Bước 4: 
+Giao diện làm việc cốt lõi của dự án SSAS sẽ xuất hiện. Tại cửa sổ Solution Explorer, hệ thống sẽ tự động sinh ra các thư mục cấu trúc nền tảng như Data Sources, Data Source Views, Cubes, Dimensions... minh chứng rằng dự án phân tích đa chiều đã được thiết lập thành công.
+Hình 3.1.4: Giao diện tổng quan của dự án SSAS sau khi khởi tạo
+3.2 Tạo Data Source
+3.2 Tạo Data Source
+Bước 1: Nhấp chuột phải vào thư mục Data Sources và chọn New Data Source... để bắt đầu tạo nguồn dữ liệu cho mô hình OLAP.
+Bước 2: Mở Data Source Wizard, màn hình “Welcome to the Data Source Wizard” xuất hiện. Chọn Next > để tiếp tục. 
+Bước 3: Ở bước “Select how to define the connection”, chọn tùy chọn Create a data source based on an existing or new connection rồi nhấn New... để tạo kết nối mới. 
+3.3. Tạo khung Data source view
+3.4 Tạo các dimension
+3.5. Tạo cube
+3.5.1 Tạo Cube và Dimension
+3.5.2 Xác định các độ đo (Measure)
+3.6. Thiết lập quan hệ chiều
+3.7. Phân cấp dữ liệu
+3.8. Thực hiện Deploy project SSAS
+3.9. Thực hiện 15 câu truy vấn sử dụng SSAS,
+3.9. Thực hiện 15 câu truy vấn sử dụng SSAS, Pivot table, ngôn ngữ MDX
+3.9.1 Câu truy vấn 1
+3.9.2 Câu truy vấn 2
+3.9.3 Câu truy vấn 3
+3.9.4 Câu truy vấn 4
+3.9.5 Câu truy vấn 5
+3.9.6 Câu truy vấn 6
+3.9.7 Câu truy vấn 7
+3.9.8 Câu truy vấn 8
+3.9.9 Câu truy vấn 9
+3.9.10 Câu truy vấn 10
+3.9.11 Câu truy vấn 11
+3.9.12 Câu truy vấn 12
+3.9.13 Câu truy vấn 13
+3.9.14 Câu truy vấn 14
+3.9.15 Câu truy vấn 15
