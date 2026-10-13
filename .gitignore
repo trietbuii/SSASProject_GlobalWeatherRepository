@@ -4,3 +4,4 @@ obj/
 *.docx
 *.user
 *.database
+.vs/

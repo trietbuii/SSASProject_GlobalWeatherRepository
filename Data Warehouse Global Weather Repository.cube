@@ -1,4 +1,4 @@
-﻿<Cube xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="d93b1e97-4dcd-4c68-964c-ae0edcc100a8" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+﻿<Cube xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="df843469-cafa-4d53-b646-89d22bbc9e5d" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
   <ID>Data Warehouse Global Weather Repository</ID>
   <Name>Data Warehouse Global Weather Repository</Name>
   <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
@@ -8,9 +8,9 @@
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramLayout</Name>
       <Value>
         <dds xmlns="">
-          <diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="MSDDS.Rectilinear" defaultlineroute="MSDDS.Rectilinear" version="7" nextobject="36" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="-11298" scrolltop="-903" gridx="150" gridy="150" marginx="5000" marginy="5000" zoom="65" x="21400" y="18860" backcolor="2039583" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="0" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}">
+          <diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="MSDDS.Rectilinear" defaultlineroute="MSDDS.Rectilinear" version="7" nextobject="36" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="-11298" scrolltop="-1587" gridx="150" gridy="150" marginx="5000" marginy="5000" zoom="65" x="24691" y="19304" backcolor="2039583" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="0" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}">
             <font>
-              <ddsxmlobjectstreamwrapper binary="010000009001b0300100065461686f6d61" />
+              <ddsxmlobjectstreamwrapper binary="010000009001683c0100065461686f6d61" />
             </font>
             <mouseicon>
               <ddsxmlobjectstreamwrapper binary="6c74000000000000" />
@@ -267,8 +267,8 @@
             </layoutobject>
             <connector lineroutestyle="MSDDS.Rectilinear" sourceid="9" destid="6" sourceattachpoint="4" destattachpoint="3" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="0" relatedid="0" virtual="0">
               <point x="4916" y="14435" />
-              <point x="4916" y="12498" />
-              <point x="6601" y="12498" />
+              <point x="4916" y="11891" />
+              <point x="6601" y="11891" />
               <point x="6601" y="9347" />
             </connector>
           </ddscontrol>
@@ -293,7 +293,7 @@
     </Annotation>
     <Annotation>
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortTop</Name>
-      <Value>-903</Value>
+      <Value>-1587</Value>
     </Annotation>
     <Annotation>
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingLeft</Name>
@@ -311,166 +311,166 @@
   <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
   <State>Unprocessed</State>
   <Dimensions>
-    <Dimension dwd:design-time-name="d1181f8b-dba9-40ff-bbae-54eca2f0af36">
+    <Dimension dwd:design-time-name="3632fdce-771e-4678-960f-6cde6e81d9b5">
       <ID>DIM WIND DIRECTION</ID>
       <Name>DIM WIND DIRECTION</Name>
       <DimensionID>DIM WIND DIRECTION</DimensionID>
       <Attributes>
-        <Attribute dwd:design-time-name="d216e771-2d89-4956-b86a-fcab1e71c760">
+        <Attribute dwd:design-time-name="193cdc7d-7f85-4227-a98f-2685feffe052">
           <AttributeID>Wind Direction Id</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="1e0655f9-575a-4816-8e36-c2d092594661">
+        <Attribute dwd:design-time-name="d5519a8d-7df1-4eac-aa62-5a9feed60688">
           <AttributeID>Wind Direction</AttributeID>
         </Attribute>
       </Attributes>
     </Dimension>
-    <Dimension dwd:design-time-name="33b50235-1ea1-4450-8e4d-b167a7b3430f">
+    <Dimension dwd:design-time-name="016b74b9-4199-40ac-9938-7aa632afee2f">
       <ID>DIM WEATHER CONDITION</ID>
       <Name>DIM WEATHER CONDITION</Name>
       <DimensionID>DIM WEATHER CONDITION</DimensionID>
       <Attributes>
-        <Attribute dwd:design-time-name="ad3b4652-f4f4-4453-92a1-5ebfc71f67c1">
+        <Attribute dwd:design-time-name="ea77a09c-d4f6-4bfb-83a9-718818e5e369">
           <AttributeID>Condition Id</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="3cddd2ff-009a-4751-a01d-045ec1623d6d">
+        <Attribute dwd:design-time-name="609cd496-e8aa-4224-a152-2f88ae837393">
           <AttributeID>Condition Text</AttributeID>
         </Attribute>
       </Attributes>
     </Dimension>
-    <Dimension dwd:design-time-name="d01b12b5-fdd4-47fb-8dc0-eb040c49cc11">
+    <Dimension dwd:design-time-name="3f561d90-6721-4d13-9ee7-53d638879015">
       <ID>DIM DATE</ID>
       <Name>DIM DATE</Name>
       <DimensionID>DIM DATE</DimensionID>
       <Attributes>
-        <Attribute dwd:design-time-name="e33b24b0-899f-4001-b9b2-958fd20783f4">
+        <Attribute dwd:design-time-name="9fe0d181-2188-46b0-a5f9-54429940bdd6">
           <AttributeID>Date Id</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="327b9d61-f638-47b4-8902-811a2c0f0999">
+        <Attribute dwd:design-time-name="c4e03d72-33e0-474e-b210-e508a3e8d3c1">
           <AttributeID>Full Date</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="b6aa1e19-19bd-4a85-9084-ac8b2ab62810">
+        <Attribute dwd:design-time-name="86603aa2-90e2-44c4-a5d6-da5420a0548e">
           <AttributeID>Year</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="3eb82f4b-e259-4bc7-898c-356e2fcd588c">
+        <Attribute dwd:design-time-name="c65e974f-6660-498c-b601-242796bcb226">
           <AttributeID>Quarter</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="a35a3fe6-7028-4182-80be-8511553b34b7">
+        <Attribute dwd:design-time-name="d921d8e0-a000-4dd5-92d9-7c3348702977">
           <AttributeID>Month</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="c55ab4ff-fba2-4983-9081-a64b23c6591d">
+        <Attribute dwd:design-time-name="4c5c56a1-3926-454e-9d07-6d70a4fdb8ef">
           <AttributeID>Week Of Year</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="dfeb936e-f54b-43a3-ab7b-68428cc57e5d">
+        <Attribute dwd:design-time-name="6afb4ae6-2970-4fda-9e1b-6219a01161e8">
           <AttributeID>Day</AttributeID>
         </Attribute>
       </Attributes>
       <Hierarchies>
-        <Hierarchy dwd:design-time-name="9a0302a2-0980-4afb-933e-7598f46ef6c0">
+        <Hierarchy dwd:design-time-name="2b5614b2-c89a-46e5-b462-ffbc324d262e">
           <HierarchyID>Hierarchy</HierarchyID>
         </Hierarchy>
       </Hierarchies>
     </Dimension>
-    <Dimension dwd:design-time-name="ee85b2aa-70a3-42dc-aa59-fbe9e6b31ec8">
+    <Dimension dwd:design-time-name="46b559dd-2f24-4f2f-a3f9-bc322e5ab1bc">
       <ID>DIM ASTRONOMY</ID>
       <Name>DIM ASTRONOMY</Name>
       <DimensionID>DIM ASTRONOMY</DimensionID>
       <Attributes>
-        <Attribute dwd:design-time-name="e5750db0-c5eb-4253-b00d-57f0993cb26d">
+        <Attribute dwd:design-time-name="836b3a88-e8d8-43d2-bafa-3e8b6c1142b1">
           <AttributeID>Astronomy Id</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="f887830e-0252-4c26-a92c-c11a9bbf8d77">
+        <Attribute dwd:design-time-name="a572bc9c-5007-4f13-9d76-dfdacf5eb3a9">
           <AttributeID>Sunrise</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="92235331-d286-4dd5-9fd3-29ebcf8fc042">
+        <Attribute dwd:design-time-name="c4f17522-888e-4c05-9371-2846e746cbdd">
           <AttributeID>Sunset</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="133eb551-93f4-4b3c-9034-8609c5882ab0">
+        <Attribute dwd:design-time-name="4bbbf89a-0aad-4ec0-b7c4-3cff84472b20">
           <AttributeID>Moonrise</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="2e57c7ee-7f4a-49b4-941f-85a04358f989">
+        <Attribute dwd:design-time-name="55ea4ae9-1505-42cb-9a71-93e04013b961">
           <AttributeID>Moonset</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="ec1cc1ec-a35a-48dc-b036-ce84b6b3c624">
+        <Attribute dwd:design-time-name="2c35a909-6064-4af6-8e41-8bc7d21b7e0b">
           <AttributeID>Moon Phase Id</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="7e681258-6540-4ff3-b0e6-3095de424cff">
+        <Attribute dwd:design-time-name="8c0d9241-a5ce-4b67-80e8-a32bcab8de03">
           <AttributeID>Moon Phase</AttributeID>
         </Attribute>
       </Attributes>
     </Dimension>
-    <Dimension dwd:design-time-name="d5ea4c40-287b-4d14-bee8-366107b46f69">
+    <Dimension dwd:design-time-name="b7590cef-7f5e-4af5-aec0-22d538f92c15">
       <ID>DIM TIME</ID>
       <Name>DIM TIME</Name>
       <DimensionID>DIM TIME</DimensionID>
       <Attributes>
-        <Attribute dwd:design-time-name="023a196b-1fca-4e19-a526-19c2e15a6e45">
+        <Attribute dwd:design-time-name="402ffcdd-9b69-401f-bf03-439d582a40ea">
           <AttributeID>Time Id</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="67ff37be-5673-4afe-be5e-1a2b864c8b5f">
+        <Attribute dwd:design-time-name="c61e5a69-a466-492d-9599-9a796e6539c5">
           <AttributeID>Hour</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="459a6121-bc62-4627-997f-7c66e165777d">
+        <Attribute dwd:design-time-name="3ca90624-c616-4f76-bf1f-80a902961c8e">
           <AttributeID>Minute</AttributeID>
         </Attribute>
       </Attributes>
     </Dimension>
-    <Dimension dwd:design-time-name="9928e837-294f-4d2c-9387-3868a2dab2fa">
+    <Dimension dwd:design-time-name="2f7dc7f6-d43b-4856-8697-a50c849ca601">
       <ID>DIM LOCATION</ID>
       <Name>DIM LOCATION</Name>
       <DimensionID>DIM LOCATION</DimensionID>
       <Attributes>
-        <Attribute dwd:design-time-name="32806f84-ca0d-438a-be19-c4fababc364c">
+        <Attribute dwd:design-time-name="262b4a32-7bac-48d8-9d71-6b8a488320c2">
           <AttributeID>Location Id</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="e1adcc99-1c8c-4c29-92be-b3400d755044">
+        <Attribute dwd:design-time-name="42764d9b-5139-4721-beb8-b50dc776245b">
           <AttributeID>Location Name</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="dcab3a09-f024-4166-b685-6371b6b11e36">
+        <Attribute dwd:design-time-name="03c5c35d-a894-414c-9ab4-91362e171c97">
           <AttributeID>Latitude</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="60ddd53a-c363-4cfc-9710-625a1d81cde6">
+        <Attribute dwd:design-time-name="bed01869-3a61-4ba8-a318-bad1e4594844">
           <AttributeID>Longitude</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="0d3792d4-25b7-407e-ac29-23b7b17943c1">
+        <Attribute dwd:design-time-name="e9abe192-3f83-402c-94a1-ffeadd2c5811">
           <AttributeID>Timezone</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="ae5fc62b-f50a-4579-87f4-f11b9aaf8bc1">
+        <Attribute dwd:design-time-name="ae61c7d6-462f-4a5b-8f76-7ac3ddcec3b4">
           <AttributeID>Country Id</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="951af195-cd0f-49ac-8730-7a759982d217">
+        <Attribute dwd:design-time-name="371a7163-905d-4865-b176-71de44ecdd62">
           <AttributeID>Country Name</AttributeID>
         </Attribute>
       </Attributes>
     </Dimension>
-    <Dimension dwd:design-time-name="ce260d52-ac52-4a9b-8bb0-76c1d43bfa52">
+    <Dimension dwd:design-time-name="7fcd70db-66ac-4cd4-aa5f-43b99f7a60f4">
       <ID>DIM COUNTRY</ID>
       <Name>DIM COUNTRY</Name>
       <DimensionID>DIM COUNTRY</DimensionID>
       <Attributes>
-        <Attribute dwd:design-time-name="021ded3c-3361-4b60-a1e1-5634b72d7ccf">
+        <Attribute dwd:design-time-name="ae4195e4-3ce1-4538-b498-852b8a41a38e">
           <AttributeID>Country Id</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="01ca48eb-431f-418d-946e-2adca3fb7b22">
+        <Attribute dwd:design-time-name="076d6b8a-01f6-4537-a91b-a15a433fd8ba">
           <AttributeID>Country Name</AttributeID>
         </Attribute>
       </Attributes>
     </Dimension>
-    <Dimension dwd:design-time-name="03fca872-d5c6-4686-8909-177866e65f9c">
+    <Dimension dwd:design-time-name="e7d78f78-32d6-4cbf-a523-414dd7498fad">
       <ID>DIM MOON PHASE</ID>
       <Name>DIM MOON PHASE</Name>
       <DimensionID>DIM MOON PHASE</DimensionID>
       <Attributes>
-        <Attribute dwd:design-time-name="132fd020-2170-49fa-abbe-3128f5795948">
+        <Attribute dwd:design-time-name="c2b7915f-db50-4be8-b253-29c24189c549">
           <AttributeID>Moon Phase Id</AttributeID>
         </Attribute>
-        <Attribute dwd:design-time-name="c9e90c5b-c128-4b71-865a-b384b367bf4a">
+        <Attribute dwd:design-time-name="680bf141-137b-46f5-845c-02b6a99711d2">
           <AttributeID>Moon Phase</AttributeID>
         </Attribute>
       </Attributes>
     </Dimension>
   </Dimensions>
   <MeasureGroups>
-    <MeasureGroup dwd:design-time-name="97f41c14-6712-463d-8436-f26d3613dcd6">
+    <MeasureGroup dwd:design-time-name="30145962-2ae3-4cfe-b0f1-21288f9a0777">
       <ID>FACT WEATHER</ID>
       <Name>FACT WEATHER</Name>
       <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
@@ -478,180 +478,252 @@
       <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
       <State>Unprocessed</State>
       <Measures>
-        <Measure dwd:design-time-name="09e48c18-f731-4c09-8365-9c767df2b482">
+        <Measure dwd:design-time-name="4b73ce24-ac69-4253-9ed7-92c490901811">
           <ID>Temperature Celsius</ID>
           <Name>Temperature Celsius</Name>
-          <Source dwd:design-time-name="970eaf86-5d07-48a6-93ef-124382cf14f3">
+          <Source dwd:design-time-name="ae91e93a-c211-44d7-bfbd-e86cf83618fc">
             <DataType>Double</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="fccb665f-cc39-4c2d-9c91-2c2bc2a46503">
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="73d695fa-b642-492f-b6e1-d69c7d3b2403">
               <TableID>dbo_FACT_WEATHER</TableID>
               <ColumnID>temperature_celsius</ColumnID>
             </Source>
           </Source>
         </Measure>
-        <Measure dwd:design-time-name="76453d0d-e0c0-455a-89f9-063cc0bab9b7">
+        <Measure dwd:design-time-name="81177e34-d344-45d4-916c-5e9d8a6e3974">
           <ID>Wind Kph</ID>
           <Name>Wind Kph</Name>
-          <Source dwd:design-time-name="c535a115-e53e-4ff6-a885-7848b49aba64">
+          <Source dwd:design-time-name="3a0bd9fa-a576-4954-9862-e792e0eedcfa">
             <DataType>Double</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="0300ea58-9b53-4f2c-b5fb-a6534fbfc2d5">
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="81c765c1-8e92-4aa7-b16d-9db262e87926">
               <TableID>dbo_FACT_WEATHER</TableID>
               <ColumnID>wind_kph</ColumnID>
             </Source>
           </Source>
         </Measure>
-        <Measure dwd:design-time-name="382088ae-85ba-44bb-8f9e-ce4f51778ef9">
+        <Measure dwd:design-time-name="29577e38-323b-4a50-b40c-c9e3fa3d28b2">
           <ID>Wind Degree</ID>
           <Name>Wind Degree</Name>
-          <Source dwd:design-time-name="879ee305-d383-42a5-892e-fc249581ac2e">
+          <Source dwd:design-time-name="739d896e-137e-4850-8efa-af7c7065722c">
             <DataType>Integer</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="b05865c7-0162-4e27-a63a-e0d7ec29b727">
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="9c336646-f6bc-482d-9feb-9ffc291d91a2">
               <TableID>dbo_FACT_WEATHER</TableID>
               <ColumnID>wind_degree</ColumnID>
             </Source>
           </Source>
         </Measure>
-        <Measure dwd:design-time-name="082bb246-0f8e-4bde-afbc-72d493a04798">
+        <Measure dwd:design-time-name="34ae4d1c-beff-4320-872e-6f8e17a557c4">
           <ID>Pressure Mb</ID>
           <Name>Pressure Mb</Name>
-          <Source dwd:design-time-name="7b00a169-7c68-416c-96e3-cedbe0f4378d">
+          <Source dwd:design-time-name="c4957d94-a1eb-46af-b04e-c1057c047ab6">
             <DataType>Double</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="a51eba25-4094-4f46-80f8-27eaf6e0b250">
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="97341529-425d-4ed6-8ebd-a10ce775e664">
               <TableID>dbo_FACT_WEATHER</TableID>
               <ColumnID>pressure_mb</ColumnID>
             </Source>
           </Source>
         </Measure>
-        <Measure dwd:design-time-name="2ba5d6db-f0f5-40f8-8afa-cca1a98c9ecc">
+        <Measure dwd:design-time-name="8695ba35-ff16-4388-b1a8-f7c889d69d75">
           <ID>Precip Mm</ID>
           <Name>Precip Mm</Name>
-          <Source dwd:design-time-name="d3530cb8-8887-447c-92af-84c3df3d0864">
+          <Source dwd:design-time-name="63e6491a-66d2-433b-a4ce-0575a2e1e6ec">
             <DataType>Double</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="2fdc50e4-341a-4eda-ab95-59c9ffd7858e">
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="436a4ebe-cf77-4b0b-b256-0a2c82b9c671">
               <TableID>dbo_FACT_WEATHER</TableID>
               <ColumnID>precip_mm</ColumnID>
             </Source>
           </Source>
         </Measure>
-        <Measure dwd:design-time-name="d67f297c-f3f9-4457-8586-cf25bbdd21a2">
+        <Measure dwd:design-time-name="9d5fc8db-853d-4f41-abbd-0724f3a0db07">
           <ID>Humidity</ID>
           <Name>Humidity</Name>
-          <Source dwd:design-time-name="19dd9ac6-1c69-4487-a4db-02f641064474">
+          <Source dwd:design-time-name="9acce8a9-d863-4a57-82df-4952ed9eb742">
             <DataType>Integer</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="95d1e5a9-4f4c-4758-b400-646359166a5d">
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="c7efad92-f679-4cd4-8046-0f1ea86cca06">
               <TableID>dbo_FACT_WEATHER</TableID>
               <ColumnID>humidity</ColumnID>
             </Source>
           </Source>
         </Measure>
-        <Measure dwd:design-time-name="13582728-5220-496f-b04b-76fd7398dac9">
+        <Measure dwd:design-time-name="f3c7d300-1631-4cbd-9e25-adaaef367040">
           <ID>Cloud</ID>
           <Name>Cloud</Name>
-          <Source dwd:design-time-name="26b3a022-ce70-47cc-9a59-074994154104">
+          <Source dwd:design-time-name="156ed5a9-9a11-4c80-b7fe-9c24810004f6">
             <DataType>Integer</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="8c2c3e67-7fc1-4ccc-b7c5-96128f66a809">
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="fda10db1-9c6f-48a5-ab45-5de1ad9c9a88">
               <TableID>dbo_FACT_WEATHER</TableID>
               <ColumnID>cloud</ColumnID>
             </Source>
           </Source>
         </Measure>
-        <Measure dwd:design-time-name="41f0c14b-74ca-4874-82bf-c8dcda577e0f">
+        <Measure dwd:design-time-name="5f251fde-48ab-4959-b61c-c295b01220bf">
           <ID>Feels Like Celsius</ID>
           <Name>Feels Like Celsius</Name>
-          <Source dwd:design-time-name="d348f03a-0eed-49d4-8299-eb0cb4ea0d9f">
+          <Source dwd:design-time-name="a2e54788-a585-4d88-bc49-c88aaea0e405">
             <DataType>Double</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="eb71c2d1-849f-4061-8966-58be7c5959ef">
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="e993e025-721e-40ad-82d8-df6d6a2f80d2">
               <TableID>dbo_FACT_WEATHER</TableID>
               <ColumnID>feels_like_celsius</ColumnID>
             </Source>
           </Source>
         </Measure>
-        <Measure dwd:design-time-name="20d2702a-e9ff-4e8a-9071-1778f0c92ce3">
+        <Measure dwd:design-time-name="d7bffd36-d1d8-48de-a079-9acfeedcd9c6">
           <ID>Visibility Km</ID>
           <Name>Visibility Km</Name>
-          <Source dwd:design-time-name="77b59753-1e41-4f87-b2a6-14f142b33944">
+          <Source dwd:design-time-name="2e2dbb8f-6b04-46da-b102-d518c76ef533">
             <DataType>Double</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="63b7b9b0-33aa-4559-9801-250404425d56">
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="53d73da2-e972-4c55-85fc-fe763e0addf1">
               <TableID>dbo_FACT_WEATHER</TableID>
               <ColumnID>visibility_km</ColumnID>
             </Source>
           </Source>
         </Measure>
-        <Measure dwd:design-time-name="c432d37b-cf52-42d6-8d43-610f0e017e7a">
+        <Measure dwd:design-time-name="82fc64c8-69c1-4179-b91c-8b7ff0cacb05">
           <ID>Uv Index</ID>
           <Name>Uv Index</Name>
-          <Source dwd:design-time-name="2205ce23-7763-4cee-b994-21a50d7d17f0">
+          <Source dwd:design-time-name="338be8ba-e842-41f1-b478-a3ec80ebf017">
             <DataType>Double</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="f35df098-71aa-4510-9240-d0ec18b2dc31">
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="02271e29-d444-4b35-927a-0b40e813d56e">
               <TableID>dbo_FACT_WEATHER</TableID>
               <ColumnID>uv_index</ColumnID>
             </Source>
           </Source>
         </Measure>
-        <Measure dwd:design-time-name="1e326507-67d4-43e9-9045-31a8211a3eb9">
+        <Measure dwd:design-time-name="5a02614f-c735-4a4d-98a6-e05ad5e53e28">
           <ID>Gust Kph</ID>
           <Name>Gust Kph</Name>
-          <Source dwd:design-time-name="9feffecd-36c6-406a-962c-c73ec0586842">
+          <Source dwd:design-time-name="380ba635-de76-4365-84b4-267b04cc86dc">
             <DataType>Double</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="de7c65a5-279e-4c26-b1b0-6b749f937dd0">
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="99d6dc98-4d97-4469-8fa6-5592f1c2e4da">
               <TableID>dbo_FACT_WEATHER</TableID>
               <ColumnID>gust_kph</ColumnID>
             </Source>
           </Source>
         </Measure>
-        <Measure dwd:design-time-name="52da7ae8-e1d8-4c16-b9dc-3fe72f8b5b6a">
+        <Measure dwd:design-time-name="d147cdc8-745b-4f98-b875-143ff6dd8805">
           <ID>Air Quality Ozone</ID>
           <Name>Air Quality Ozone</Name>
-          <Source dwd:design-time-name="42ffc9e9-394f-41d9-88d7-7a275e111583">
+          <Source dwd:design-time-name="7121330d-2476-4cbe-ade6-ac73b73d9796">
             <DataType>Double</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="53f403f6-d61e-4d7e-9561-a4f15602d159">
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="1d6d8854-7b3e-485a-b2f5-4b4ddc36287d">
               <TableID>dbo_FACT_WEATHER</TableID>
               <ColumnID>air_quality_ozone</ColumnID>
             </Source>
           </Source>
         </Measure>
-        <Measure dwd:design-time-name="caf21023-4b4d-4981-ac6f-6bdb75eb9c9d">
+        <Measure dwd:design-time-name="246cf7d0-cc3e-461b-851f-be153ab2d1a5">
           <ID>Air Quality Pm25</ID>
           <Name>Air Quality Pm25</Name>
-          <Source dwd:design-time-name="24ce158b-b3b2-44dc-8cf0-02384248cfb6">
+          <Source dwd:design-time-name="f2296646-e477-4365-9f56-ee3f962c9909">
             <DataType>Double</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="881c12fb-bf83-4179-9761-cad785bf249e">
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="ebb2d92d-5711-4ebe-8da3-f64e6ff4ce72">
               <TableID>dbo_FACT_WEATHER</TableID>
               <ColumnID>air_quality_pm25</ColumnID>
             </Source>
           </Source>
         </Measure>
-        <Measure dwd:design-time-name="25c9400e-a12b-448b-83a4-5ae913be3509">
+        <Measure dwd:design-time-name="6b9d0b0d-c7b0-4e04-869f-b7b04b88028f">
           <ID>Air Quality Pm10</ID>
           <Name>Air Quality Pm10</Name>
-          <Source dwd:design-time-name="4eb26e80-d169-490d-9d41-b73fb75ad5ad">
+          <Source dwd:design-time-name="425dcf08-c51b-414c-a7b2-a33aa59eb96b">
             <DataType>Double</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="ef4561c3-34de-44fb-ac44-6c6ae2cb9532">
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="0cfad5e4-6608-439e-a9f7-5adc06fc3044">
               <TableID>dbo_FACT_WEATHER</TableID>
               <ColumnID>air_quality_pm10</ColumnID>
             </Source>
           </Source>
         </Measure>
-        <Measure dwd:design-time-name="605a5839-7daf-4fd4-b9bd-d91f8cb6736c">
+        <Measure dwd:design-time-name="a7c5a423-5dca-4cd5-bfc8-37b0f589ccff">
           <ID>Moon Illumination</ID>
           <Name>Moon Illumination</Name>
-          <Source dwd:design-time-name="94fdf608-7dea-4ca7-82d6-6bf90efb903c">
+          <Source dwd:design-time-name="1756dc95-083f-4209-b2b2-e76c29acd095">
             <DataType>Integer</DataType>
-            <Source xsi:type="ColumnBinding" dwd:design-time-name="fabaf8e9-7a7f-4150-9a42-8fa3889f713c">
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="956cbede-2961-444c-af16-40d1ec927245">
               <TableID>dbo_FACT_WEATHER</TableID>
               <ColumnID>moon_illumination</ColumnID>
             </Source>
           </Source>
         </Measure>
-        <Measure dwd:design-time-name="4db6bf00-2b1c-40fb-a6fb-22706dce7260">
+        <Measure dwd:design-time-name="e1198365-c2f3-4adf-9703-8c84b9bcc30f">
           <ID>FACT WEATHER Count</ID>
           <Name>FACT WEATHER Count</Name>
           <AggregateFunction>Count</AggregateFunction>
-          <Source dwd:design-time-name="ed721231-d55d-4cb2-8db5-b40a0abc0658">
+          <Source dwd:design-time-name="baaae86f-9881-4e77-8d4c-cefa25d8b6e1">
             <DataType>Integer</DataType>
             <DataSize>4</DataSize>
-            <Source xsi:type="RowBinding" dwd:design-time-name="0271e002-8f73-4418-aab1-4fe95828f29f">
+            <Source xsi:type="RowBinding" dwd:design-time-name="496e16db-94a7-4e12-9269-e2aa553a096b">
               <TableID>dbo_FACT_WEATHER</TableID>
+            </Source>
+          </Source>
+        </Measure>
+        <Measure dwd:design-time-name="088e2a8d-ec78-4111-bd62-85bfb33671d5">
+          <ID>Minimum Temperature Celsius</ID>
+          <Name>Min Temperature</Name>
+          <AggregateFunction>Min</AggregateFunction>
+          <Source dwd:design-time-name="57e52a5d-8869-47c8-b495-a8aee93076ed">
+            <DataType>Double</DataType>
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="2dcdeaaf-4dff-4637-b39f-072ec8344cdc">
+              <TableID>dbo_FACT_WEATHER</TableID>
+              <ColumnID>temperature_celsius</ColumnID>
+            </Source>
+          </Source>
+        </Measure>
+        <Measure dwd:design-time-name="b099df77-955b-418f-a57e-39d23dd19535">
+          <ID>Maximum Temperature Celsius</ID>
+          <Name>Max Temperature</Name>
+          <AggregateFunction>Max</AggregateFunction>
+          <Source dwd:design-time-name="c70f90c4-b364-4e15-8193-da8187396442">
+            <DataType>Double</DataType>
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="da494183-5058-4746-a5e1-4431f5f3c0de">
+              <TableID>dbo_FACT_WEATHER</TableID>
+              <ColumnID>temperature_celsius</ColumnID>
+            </Source>
+          </Source>
+        </Measure>
+        <Measure dwd:design-time-name="7dee2d07-3ee0-442c-881f-a9a6030fc84a">
+          <ID>Maximum Gust Kph</ID>
+          <Name>Max Gust Kph</Name>
+          <AggregateFunction>Max</AggregateFunction>
+          <Source dwd:design-time-name="57bacf26-0ead-4e44-8159-8a4b99d01b62">
+            <DataType>Double</DataType>
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="006be85a-b341-4d57-8b13-f2006bb79bc8">
+              <TableID>dbo_FACT_WEATHER</TableID>
+              <ColumnID>gust_kph</ColumnID>
+            </Source>
+          </Source>
+        </Measure>
+        <Measure dwd:design-time-name="712037ea-1ff0-4b52-9229-056a8057045e">
+          <ID>Minimum Pressure Mb</ID>
+          <Name>Min Pressure Mb</Name>
+          <AggregateFunction>Min</AggregateFunction>
+          <Source dwd:design-time-name="11db509a-53ef-4e90-9f00-1e512b597b13">
+            <DataType>Double</DataType>
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="419be00b-0da8-4706-ba3a-0a8907acff6f">
+              <TableID>dbo_FACT_WEATHER</TableID>
+              <ColumnID>pressure_mb</ColumnID>
+            </Source>
+          </Source>
+        </Measure>
+        <Measure dwd:design-time-name="79c9e748-07e4-4fa8-a6c4-efa92517d3a9">
+          <ID>Maximum Pressure Mb</ID>
+          <Name>Max Pressure Mb</Name>
+          <AggregateFunction>Max</AggregateFunction>
+          <Source dwd:design-time-name="d67bd14d-f95b-4d12-8f22-0fe8d4a6d2d0">
+            <DataType>Double</DataType>
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="798b9333-7c5f-447e-97f9-8cd33f2d9485">
+              <TableID>dbo_FACT_WEATHER</TableID>
+              <ColumnID>pressure_mb</ColumnID>
+            </Source>
+          </Source>
+        </Measure>
+        <Measure dwd:design-time-name="3e5dd245-ea26-437d-8c7e-7b9fc52040fa">
+          <ID>Maximum Uv Index</ID>
+          <Name>Max Uv Index</Name>
+          <AggregateFunction>Max</AggregateFunction>
+          <Source dwd:design-time-name="4665ae1a-3ced-4c78-9a0e-8a25de9e9d9a">
+            <DataType>Double</DataType>
+            <Source xsi:type="ColumnBinding" dwd:design-time-name="bf670b64-b284-4d00-9a29-e083e5952c26">
+              <TableID>dbo_FACT_WEATHER</TableID>
+              <ColumnID>uv_index</ColumnID>
             </Source>
           </Source>
         </Measure>
@@ -659,15 +731,15 @@
       <StorageMode>Molap</StorageMode>
       <ProcessingMode>Regular</ProcessingMode>
       <Dimensions>
-        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="c1fecaa8-71c2-4ba8-bc18-88e96c759fdf">
+        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="a2c33f4f-4d32-43fa-9c50-cc3e69ee15c4">
           <CubeDimensionID>DIM WIND DIRECTION</CubeDimensionID>
           <Attributes>
-            <Attribute dwd:design-time-name="76b8157a-3cf9-45c3-a96b-8999c7c30627">
+            <Attribute dwd:design-time-name="cb7afd45-50cf-4a4f-8e81-98898b4dd234">
               <AttributeID>Wind Direction Id</AttributeID>
               <KeyColumns>
-                <KeyColumn dwd:design-time-name="93a2a699-71af-4a99-a18a-d8c85fdcf6d9">
+                <KeyColumn dwd:design-time-name="833f7eb2-fa56-491f-81be-3132b9181114">
                   <DataType>Integer</DataType>
-                  <Source xsi:type="ColumnBinding" dwd:design-time-name="f6b5607b-8644-44c2-b1d9-4a9efaeb0acf">
+                  <Source xsi:type="ColumnBinding" dwd:design-time-name="cbd649d6-8299-4d07-b1a2-6b7bc44dfd1f">
                     <TableID>dbo_FACT_WEATHER</TableID>
                     <ColumnID>wind_direction_id</ColumnID>
                   </Source>
@@ -677,15 +749,15 @@
             </Attribute>
           </Attributes>
         </Dimension>
-        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="5845fb2f-ab6a-4780-8af4-106d4406d58d">
+        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="c86b6740-a79b-40da-ad25-246c67f494ec">
           <CubeDimensionID>DIM WEATHER CONDITION</CubeDimensionID>
           <Attributes>
-            <Attribute dwd:design-time-name="9d965547-1181-49fb-ae12-3f12ed0ad240">
+            <Attribute dwd:design-time-name="0a038072-dc8d-4f8a-be1d-0fbaa28a4a67">
               <AttributeID>Condition Id</AttributeID>
               <KeyColumns>
-                <KeyColumn dwd:design-time-name="349dcb89-30a1-4c4a-8e9a-08b8761ac21d">
+                <KeyColumn dwd:design-time-name="c6be9052-5cb7-4d4d-aa29-2fb58c12382e">
                   <DataType>Integer</DataType>
-                  <Source xsi:type="ColumnBinding" dwd:design-time-name="5593c108-385f-4c48-a856-02bca9379625">
+                  <Source xsi:type="ColumnBinding" dwd:design-time-name="19ba1555-1140-4814-bb69-2228502898e3">
                     <TableID>dbo_FACT_WEATHER</TableID>
                     <ColumnID>condition_id</ColumnID>
                   </Source>
@@ -695,15 +767,15 @@
             </Attribute>
           </Attributes>
         </Dimension>
-        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="5a818bd0-484a-4d03-97e5-5156bd4f1980">
+        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="21dbbe09-af58-41ca-99b0-23485e8c31d9">
           <CubeDimensionID>DIM DATE</CubeDimensionID>
           <Attributes>
-            <Attribute dwd:design-time-name="b45f60ad-6057-4270-b073-98e13eefcbc7">
+            <Attribute dwd:design-time-name="9589857a-146b-4a02-afc2-160cb9440959">
               <AttributeID>Date Id</AttributeID>
               <KeyColumns>
-                <KeyColumn dwd:design-time-name="1618ff26-ebb0-42c3-8466-47e8aa30d91f">
+                <KeyColumn dwd:design-time-name="2e65d9c1-cccf-4232-ad98-f1cc9f372f5a">
                   <DataType>Integer</DataType>
-                  <Source xsi:type="ColumnBinding" dwd:design-time-name="8d0af2a2-f8a2-48d8-b985-7e060dac5466">
+                  <Source xsi:type="ColumnBinding" dwd:design-time-name="ba1440c0-7108-4d8c-bdfb-36320b445807">
                     <TableID>dbo_FACT_WEATHER</TableID>
                     <ColumnID>date_id</ColumnID>
                   </Source>
@@ -713,15 +785,15 @@
             </Attribute>
           </Attributes>
         </Dimension>
-        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="d12afc00-a2dd-42ec-877d-14dda3dd4f0e">
+        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="5191ceff-a954-4f3b-96aa-7884e1d224bc">
           <CubeDimensionID>DIM ASTRONOMY</CubeDimensionID>
           <Attributes>
-            <Attribute dwd:design-time-name="c1c07e03-848b-4760-b104-03d1298b863c">
+            <Attribute dwd:design-time-name="bd7d3917-9c1b-4f7a-8f52-704c78eeefc7">
               <AttributeID>Astronomy Id</AttributeID>
               <KeyColumns>
-                <KeyColumn dwd:design-time-name="44fe3f74-ae17-4ec5-9c40-71a2f6ffd2df">
+                <KeyColumn dwd:design-time-name="7973bae6-f490-4865-8537-e313359d3ce0">
                   <DataType>Integer</DataType>
-                  <Source xsi:type="ColumnBinding" dwd:design-time-name="004ea95a-6c8b-4521-8c0d-39d2082a970d">
+                  <Source xsi:type="ColumnBinding" dwd:design-time-name="2ebc6ad4-6ad4-4758-aad3-102d80557ff3">
                     <TableID>dbo_FACT_WEATHER</TableID>
                     <ColumnID>astronomy_id</ColumnID>
                   </Source>
@@ -731,15 +803,15 @@
             </Attribute>
           </Attributes>
         </Dimension>
-        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="f42861cb-f5e5-4936-9c91-148c3e527c8f">
+        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="8894b9ac-c29b-4b79-b0b5-6b31e407b346">
           <CubeDimensionID>DIM TIME</CubeDimensionID>
           <Attributes>
-            <Attribute dwd:design-time-name="221b6178-47fd-457e-bc0a-bda77a28dfd0">
+            <Attribute dwd:design-time-name="3bc975a1-626a-41c2-bc59-a0bb809801fd">
               <AttributeID>Time Id</AttributeID>
               <KeyColumns>
-                <KeyColumn dwd:design-time-name="be9904e8-3ab4-4ea0-99b6-51c50d28338c">
+                <KeyColumn dwd:design-time-name="b0876197-aca5-460d-9dea-37fe1d57de62">
                   <DataType>Integer</DataType>
-                  <Source xsi:type="ColumnBinding" dwd:design-time-name="0b0085d4-5271-41d3-8659-0fd0623e1f94">
+                  <Source xsi:type="ColumnBinding" dwd:design-time-name="0b098de4-bf09-4b05-b9be-fdb09d31a777">
                     <TableID>dbo_FACT_WEATHER</TableID>
                     <ColumnID>time_id</ColumnID>
                   </Source>
@@ -749,15 +821,15 @@
             </Attribute>
           </Attributes>
         </Dimension>
-        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="bda6845e-d8c9-484e-9be3-4cb9ac9a3556">
+        <Dimension xsi:type="RegularMeasureGroupDimension" dwd:design-time-name="8aa09bd6-d9de-4438-8af7-daf7a4cb6c3a">
           <CubeDimensionID>DIM LOCATION</CubeDimensionID>
           <Attributes>
-            <Attribute dwd:design-time-name="61197704-5ef4-4693-bf8c-a6499d2941ac">
+            <Attribute dwd:design-time-name="ae754ef5-06ca-4ba4-98e1-bd0b3ae1294d">
               <AttributeID>Location Id</AttributeID>
               <KeyColumns>
-                <KeyColumn dwd:design-time-name="2be6d0f5-989f-4873-88f0-1d8ca5db4de4">
+                <KeyColumn dwd:design-time-name="e4c18c84-f283-42f1-beea-2693edc96ea8">
                   <DataType>Integer</DataType>
-                  <Source xsi:type="ColumnBinding" dwd:design-time-name="2d6288d5-aa6f-4354-9a5b-12f98e84f6c3">
+                  <Source xsi:type="ColumnBinding" dwd:design-time-name="8b7c2b15-3c33-48a7-a788-361ddb215e1c">
                     <TableID>dbo_FACT_WEATHER</TableID>
                     <ColumnID>location_id</ColumnID>
                   </Source>
@@ -767,10 +839,23 @@
             </Attribute>
           </Attributes>
         </Dimension>
-        <Dimension xsi:type="ReferenceMeasureGroupDimension" dwd:design-time-name="f74a3189-68b1-4063-94a7-da7227329c0f">
+        <Dimension xsi:type="ReferenceMeasureGroupDimension" dwd:design-time-name="4480f2ef-953a-47d7-857d-a9573c96469d">
+          <CubeDimensionID>DIM MOON PHASE</CubeDimensionID>
+          <Attributes>
+            <Attribute dwd:design-time-name="dd4e8b85-1225-4c28-b496-79220a995189">
+              <AttributeID>Moon Phase Id</AttributeID>
+              <Type>Granularity</Type>
+            </Attribute>
+          </Attributes>
+          <IntermediateCubeDimensionID>DIM ASTRONOMY</IntermediateCubeDimensionID>
+          <IntermediateGranularityAttributeID>Moon Phase Id</IntermediateGranularityAttributeID>
+          <Materialization>Regular</Materialization>
+          <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+        </Dimension>
+        <Dimension xsi:type="ReferenceMeasureGroupDimension" dwd:design-time-name="cbd6b243-ed71-46e9-9dcb-37f9eeda161b">
           <CubeDimensionID>DIM COUNTRY</CubeDimensionID>
           <Attributes>
-            <Attribute dwd:design-time-name="af86cd8f-fff1-4413-9513-ab2fc13204bd">
+            <Attribute dwd:design-time-name="5905d115-ae78-4a64-b944-cb6f94803a2a">
               <AttributeID>Country Id</AttributeID>
               <Type>Granularity</Type>
             </Attribute>
@@ -780,27 +865,80 @@
           <Materialization>Regular</Materialization>
           <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
         </Dimension>
-        <Dimension xsi:type="ReferenceMeasureGroupDimension" dwd:design-time-name="ca04a307-96ef-453a-8b14-a7756e05a909">
-          <CubeDimensionID>DIM MOON PHASE</CubeDimensionID>
-          <Attributes>
-            <Attribute dwd:design-time-name="51559f5f-9654-4efa-b748-1a2930e9ddd7">
-              <AttributeID>Moon Phase Id</AttributeID>
-              <Type>Granularity</Type>
-            </Attribute>
-          </Attributes>
-          <IntermediateCubeDimensionID>DIM ASTRONOMY</IntermediateCubeDimensionID>
-          <IntermediateGranularityAttributeID>Astronomy Id</IntermediateGranularityAttributeID>
-          <Materialization>Regular</Materialization>
-          <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
-        </Dimension>
       </Dimensions>
       <Partitions />
     </MeasureGroup>
   </MeasureGroups>
-  <Source dwd:design-time-name="4abf56fb-2936-4edc-ae7b-9896f1ce4ab5">
+  <Source dwd:design-time-name="f43abcbf-a521-4add-a837-9dacf4a5d08b">
     <DataSourceViewID>Data Warehouse Global Weather Repository</DataSourceViewID>
   </Source>
-  <ErrorConfiguration dwd:design-time-name="63ddcb77-5c5c-402a-a06e-d95337d38611">
+  <MdxScripts>
+    <MdxScript dwd:design-time-name="c469f556-7ad3-4d85-9749-ec533a2f7b8c">
+      <ID>MdxScript</ID>
+      <Name>MdxScript</Name>
+      <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+      <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+      <Commands>
+        <Command>
+          <Text>/*
+The CALCULATE command controls the aggregation of leaf cells in the cube.
+If the CALCULATE command is deleted or modified, the data within the cube is affected.
+You should edit this command only if you manually specify how the cube is aggregated.
+*/
+CALCULATE;     
+CREATE MEMBER CURRENTCUBE.[Measures].[Avg Temperature]
+ AS [Measures].[Temperature Celsius] / [Measures].[FACT WEATHER Count], 
+VISIBLE = 1;     
+CREATE MEMBER CURRENTCUBE.[Measures].[Avg Feels Like]
+ AS [Measures].[Feels Like Celsius] / [Measures].[FACT WEATHER Count], 
+VISIBLE = 1;     
+CREATE MEMBER CURRENTCUBE.[Measures].[Temp Difference]
+ AS [Measures].[Avg Feels Like] - [Measures].[Avg Temperature], 
+VISIBLE = 1;     
+CREATE MEMBER CURRENTCUBE.[Measures].[Avg Precip Mm]
+ AS [Measures].[Precip Mm] / [Measures].[FACT WEATHER Count], 
+VISIBLE = 1;     
+CREATE MEMBER CURRENTCUBE.[Measures].[Avg Humidity]
+ AS [Measures].[Humidity] / [Measures].[FACT WEATHER Count], 
+VISIBLE = 1;     
+CREATE MEMBER CURRENTCUBE.[Measures].[Avg Cloud]
+ AS [Measures].[Cloud] / [Measures].[FACT WEATHER Count], 
+VISIBLE = 1;    
+CREATE MEMBER CURRENTCUBE.[Measures].[Avg Wind Kph]
+ AS [Measures].[Wind Kph] / [Measures].[FACT WEATHER Count], 
+VISIBLE = 1;    
+CREATE MEMBER CURRENTCUBE.[Measures].[Avg Wind Degree]
+ AS [Measures].[Wind Degree] / [Measures].[FACT WEATHER Count], 
+VISIBLE = 1;    
+CREATE MEMBER CURRENTCUBE.[Measures].[Avg Pressure Mb]
+ AS [Measures].[Pressure Mb] / [Measures].[FACT WEATHER Count], 
+VISIBLE = 1;    
+CREATE MEMBER CURRENTCUBE.[Measures].[Avg Visibility Km]
+ AS [Measures].[Visibility Km] / [Measures].[FACT WEATHER Count], 
+VISIBLE = 1;    
+CREATE MEMBER CURRENTCUBE.[Measures].[Avg Uv Index]
+ AS [Measures].[Uv Index] / [Measures].[FACT WEATHER Count], 
+VISIBLE = 1;    
+CREATE MEMBER CURRENTCUBE.[Measures].[Avg Air Quality Ozone]
+ AS [Measures].[Air Quality Ozone] / [Measures].[FACT WEATHER Count], 
+VISIBLE = 1;    
+CREATE MEMBER CURRENTCUBE.[Measures].[Avg Air Quality Pm25]
+ AS [Measures].[Air Quality Pm25] / [Measures].[FACT WEATHER Count], 
+VISIBLE = 1;    
+CREATE MEMBER CURRENTCUBE.[Measures].[Avg Air Quality Pm10]
+ AS [Measures].[Air Quality Pm10] / [Measures].[FACT WEATHER Count], 
+VISIBLE = 1;    
+CREATE MEMBER CURRENTCUBE.[Measures].[Avg Moon Illumination]
+ AS [Measures].[Moon Illumination] / [Measures].[FACT WEATHER Count], 
+VISIBLE = 1; 
+CREATE MEMBER CURRENTCUBE.[Measures].[Avg Gust Kph]
+ AS [Measures].[Gust Kph] / [Measures].[FACT WEATHER Count], 
+VISIBLE = 1  ; </Text>
+        </Command>
+      </Commands>
+    </MdxScript>
+  </MdxScripts>
+  <ErrorConfiguration dwd:design-time-name="ca078508-7c9a-4a84-b6eb-666eff0b1596">
     <KeyNotFound>IgnoreError</KeyNotFound>
   </ErrorConfiguration>
 </Cube>
